@@ -1,0 +1,390 @@
+.book-page {
+  min-height: 100vh;
+  background: #f6f4f2;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.book-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.book-top-image {
+  position: relative;
+  width: 100%;
+  height: 360px;
+  overflow: hidden;
+}
+
+.book-top-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.book-back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(29, 23, 20, 0.7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.book-info-card,
+.table-map-card,
+.reservation-details-card {
+  background: #ffffff;
+  border: 1.5px solid #ddd6cf;
+  border-radius: 20px;
+  padding: 24px;
+  margin: 20px;
+}
+
+.book-info-card h1 {
+  margin: 0 0 10px;
+  color: #1d1714;
+  font-size: 34px;
+}
+
+.book-type {
+  font-size: 18px;
+  color: #8f735b;
+  margin-bottom: 18px;
+}
+
+.book-info-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #1d1714;
+  margin-bottom: 12px;
+  font-size: 17px;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.contact-btn {
+  text-decoration: none;
+  background: #ece7e2;
+  color: #6f4e37;
+  border-radius: 14px;
+  min-width: 130px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.table-map-card h2,
+.reservation-details-card h2 {
+  margin-top: 0;
+  color: #1d1714;
+}
+
+.table-legend {
+  display: flex;
+  gap: 22px;
+  color: #8f735b;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.legend-box.available {
+  background: #d8f3dc;
+  border: 1px solid #74c69d;
+}
+
+.legend-box.reserved {
+  background: #f4a6a6;
+  border: 1px solid #d9534f;
+}
+
+.table-map {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #fbf9f7;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.table-shape {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.table-shape.round {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.rect {
+  width: 130px;
+  height: 80px;
+  border-radius: 16px;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.square {
+  width: 90px;
+  height: 90px;
+  border-radius: 14px;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.chair {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #d8f3dc;
+  color: #245224;
+  border: 2px solid #74c69d;
+  font-size: 11px;
+  z-index: 1;
+}
+
+.table-shape.reserved:not(.chair) {
+  background: #f4a6a6;
+  color: #8a2222;
+  border-color: #d9534f;
+  cursor: not-allowed;
+}
+
+.selected-table {
+  box-shadow: 0 0 0 4px #d0a47b;
+}
+
+.reserve-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 8px;
+  color: #1d1714;
+  font-size: 18px;
+}
+
+.book-input {
+  width: 100%;
+  height: 56px;
+  border: 1.5px solid #ddd6cf;
+  border-radius: 14px;
+  padding: 0 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+  font-family: Georgia, "Times New Roman", serif;
+  background: white;
+}
+
+.selected-info {
+  margin-top: 20px;
+  background: #f1ede8;
+  border-radius: 14px;
+  padding: 16px;
+  color: #1d1714;
+}
+
+.selected-info p {
+  margin: 8px 0;
+}
+
+.create-seats-btn {
+  width: calc(100% - 40px);
+  margin: 0 20px 0;
+  height: 60px;
+  border: 1.5px solid #ddd6cf;
+  border-radius: 16px;
+  background: #ece7e2;
+  color: #6f4e37;
+  font-size: 18px;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.payment-btn {
+  width: 100%;
+  margin-top: 16px;
+  height: 68px;
+  border: none;
+  border-radius: 16px;
+  background: #d0a47b;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+@media (max-width: 768px) {
+  .book-top-image {
+    height: 260px;
+  }
+
+  .book-info-card h1 {
+    font-size: 28px;
+  }
+
+  .table-map {
+    height: 400px;
+  }
+
+  .table-shape.round {
+    width: 60px;
+    height: 60px;
+  }
+
+  .table-shape.rect {
+    width: 95px;
+    height: 60px;
+  }
+
+  .table-shape.square {
+    width: 64px;
+    height: 64px;
+  }
+
+  .table-shape.chair {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+
+  .payment-btn,
+  .create-seats-btn {
+    font-size: 18px;
+    height: 60px;
+  }
+}
+.legend-box.chair-selected {
+  background: #d0a47b;
+  border: 1px solid #b78657;
+}
+
+.table-shape {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.table-shape.round {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.rect {
+  width: 130px;
+  height: 80px;
+  border-radius: 16px;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.square {
+  width: 90px;
+  height: 90px;
+  border-radius: 14px;
+  background: #f3efe9;
+  color: #1d1714;
+  border: 2px solid #d0a47b;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.table-shape.chair {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #d8f3dc;
+  color: #245224;
+  border: 2px solid #74c69d;
+  font-size: 11px;
+  z-index: 1;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.table-shape.chair:hover {
+  transform: scale(1.08);
+}
+
+.chair-active-table {
+  box-shadow: 0 0 0 3px rgba(208, 164, 123, 0.22);
+}
+
+.chair-selected {
+  background: #d0a47b !important;
+  border-color: #b78657 !important;
+  color: white !important;
+}
+
+.table-shape.reserved:not(.chair) {
+  background: #f4a6a6;
+  color: #8a2222;
+  border-color: #d9534f;
+  cursor: not-allowed;
+}
+
+.selected-table {
+  box-shadow: 0 0 0 4px #d0a47b;
+}
