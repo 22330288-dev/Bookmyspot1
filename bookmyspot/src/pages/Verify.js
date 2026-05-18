@@ -36,11 +36,20 @@ export default function Verify() {
           fullName,
           email,
           phone,
-          method, // "email" or "whatsapp"
+          method,
         }),
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      console.log("SEND CODE RESPONSE:", text);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        alert("Backend returned HTML instead of JSON. Check backend route or server.");
+        return;
+      }
 
       if (response.ok) {
         alert(

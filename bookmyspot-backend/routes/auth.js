@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 
-// put your admin email here
 const ADMIN_EMAIL = "dimahussein748@gmail.com";
 
 // ================= MAIL CONFIG =================
@@ -27,8 +26,31 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
+  if (!/^\d+$/.test(phone)) {
+    return res.status(400).json({
+      message: "Phone number must contain numbers only",
+    });
+  }
+
+  if (phone.length < 7) {
+    return res.status(400).json({
+      message: "Phone number must be at least 7 digits",
+    });
+  }
+
+  const strongPasswordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(){}:"<>?])[A-Za-z\d!@#$%^&*(){}:"<>?]{8,}$/;
+
+  if (!strongPasswordRegex.test(password)) {
+    return res.status(400).json({
+      message:
+        "Password must be at least 8 characters and include uppercase, lowercase, number, and special character",
+    });
+  }
+
   db.query("SELECT * FROM users WHERE Email = ?", [email], async (err, result) => {
     if (err) {
+      console.error("REGISTER SELECT ERROR:", err);
       return res.status(500).json({ message: "Database error" });
     }
 
@@ -46,6 +68,7 @@ router.post("/register", async (req, res) => {
         [fullName, email, hashedPassword, phone, role, 0, null, null],
         (insertErr) => {
           if (insertErr) {
+            console.error("REGISTER INSERT ERROR:", insertErr);
             return res.status(500).json({ message: "Insert failed" });
           }
 
@@ -55,6 +78,7 @@ router.post("/register", async (req, res) => {
         }
       );
     } catch (hashError) {
+      console.error("PASSWORD HASH ERROR:", hashError);
       return res.status(500).json({ message: "Password hashing failed" });
     }
   });
@@ -62,66 +86,84 @@ router.post("/register", async (req, res) => {
 
 // ================= SEND ACCOUNT VERIFICATION CODE =================
 router.post("/send-code", async (req, res) => {
-  const { email, phone, method } = req.body;
+  try {
+    const { email, phone, method } = req.body;
 
-  if (!method) {
-    return res.status(400).json({ message: "Method is required" });
-  }
+    console.log("SEND CODE BODY:", req.body);
 
-  const code = Math.floor(100000 + Math.random() * 900000).toString();
+    if (!method) {
+      return res.status(400).json({ message: "Method is required" });
+    }
 
-  if (method === "email") {
-    db.query(
-      "UPDATE users SET verification_code = ? WHERE Email = ?",
-      [code, email],
-      async (err) => {
-        if (err) {
-          return res.status(500).json({ message: "Database error" });
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    if (method === "email") {
+      db.query(
+        "UPDATE users SET verification_code = ? WHERE Email = ?",
+        [code, email],
+        async (err, result) => {
+          if (err) {
+            console.error("SEND CODE EMAIL DB ERROR:", err);
+            return res.status(500).json({ message: "Database error" });
+          }
+
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "User not found" });
+          }
+
+          try {
+            await transporter.sendMail({
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: "Verification Code",
+              text: `Your verification code is: ${code}`,
+            });
+
+            return res.status(200).json({
+              message: "Code sent to email",
+            });
+          } catch (mailError) {
+            console.error("MAIL ERROR:", mailError);
+            return res.status(500).json({
+              message: "Email could not be sent",
+            });
+          }
         }
+      );
+      return;
+    }
 
-        try {
-          await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Verification Code",
-            text: `Your verification code is: ${code}`,
-          });
+    if (method === "whatsapp") {
+      db.query(
+        "UPDATE users SET verification_code = ? WHERE Phone = ?",
+        [code, phone],
+        (err, result) => {
+          if (err) {
+            console.error("SEND CODE WHATSAPP DB ERROR:", err);
+            return res.status(500).json({ message: "Database error" });
+          }
+
+          if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "User not found" });
+          }
+
+          console.log("WhatsApp verification code:", code);
 
           return res.status(200).json({
-            message: "Code sent to email",
-          });
-        } catch (mailError) {
-          console.log("MAIL ERROR:", mailError.message);
-          return res.status(500).json({
-            message: "Email could not be sent",
+            message: "Code sent to WhatsApp (check terminal)",
           });
         }
-      }
-    );
-    return;
+      );
+      return;
+    }
+
+    return res.status(400).json({ message: "Invalid method" });
+  } catch (error) {
+    console.error("SEND CODE ROUTE ERROR:", error);
+    return res.status(500).json({
+      message: "Internal server error in send-code",
+    });
   }
-
-  if (method === "whatsapp") {
-    db.query(
-      "UPDATE users SET verification_code = ? WHERE Phone = ?",
-      [code, phone],
-      (err) => {
-        if (err) {
-          return res.status(500).json({ message: "Database error" });
-        }
-
-        // demo only
-        console.log("WhatsApp verification code:", code);
-
-        return res.status(200).json({
-          message: "Code sent to WhatsApp (check terminal)",
-        });
-      }
-    );
-    return;
-  }
-
-  return res.status(400).json({ message: "Invalid method" });
 });
 
 // ================= VERIFY ACCOUNT CODE =================
@@ -137,6 +179,7 @@ router.post("/verify-code", (req, res) => {
     [email, code],
     (err, result) => {
       if (err) {
+        console.error("VERIFY CODE SELECT ERROR:", err);
         return res.status(500).json({ message: "Database error" });
       }
 
@@ -149,6 +192,7 @@ router.post("/verify-code", (req, res) => {
         [email],
         (updateErr) => {
           if (updateErr) {
+            console.error("VERIFY CODE UPDATE ERROR:", updateErr);
             return res.status(500).json({ message: "Verification update failed" });
           }
 
@@ -171,6 +215,7 @@ router.post("/login", (req, res) => {
 
   db.query("SELECT * FROM users WHERE Email = ?", [email], async (err, result) => {
     if (err) {
+      console.error("LOGIN SELECT ERROR:", err);
       return res.status(500).json({ message: "Database error" });
     }
 
@@ -225,6 +270,7 @@ router.post("/forgot-password", (req, res) => {
 
   db.query("SELECT * FROM users WHERE Email = ?", [email], async (err, result) => {
     if (err) {
+      console.error("FORGOT PASSWORD SELECT ERROR:", err);
       return res.status(500).json({ message: "Database error" });
     }
 
@@ -239,6 +285,7 @@ router.post("/forgot-password", (req, res) => {
       [resetCode, email],
       async (updateErr) => {
         if (updateErr) {
+          console.error("FORGOT PASSWORD UPDATE ERROR:", updateErr);
           return res.status(500).json({ message: "Failed to save reset code" });
         }
 
@@ -254,7 +301,7 @@ router.post("/forgot-password", (req, res) => {
             message: "Reset code sent to your email",
           });
         } catch (mailError) {
-          console.log("RESET MAIL ERROR:", mailError.message);
+          console.error("RESET MAIL ERROR:", mailError);
           return res.status(500).json({
             message: "Email could not be sent",
           });
@@ -277,6 +324,7 @@ router.post("/verify-reset-code", (req, res) => {
     [email, code],
     (err, result) => {
       if (err) {
+        console.error("VERIFY RESET CODE ERROR:", err);
         return res.status(500).json({ message: "Database error" });
       }
 
@@ -309,6 +357,7 @@ router.post("/reset-password", async (req, res) => {
       [hashedPassword, email],
       (err) => {
         if (err) {
+          console.error("RESET PASSWORD UPDATE ERROR:", err);
           return res.status(500).json({ message: "Failed to update password" });
         }
 
@@ -318,6 +367,7 @@ router.post("/reset-password", async (req, res) => {
       }
     );
   } catch (error) {
+    console.error("RESET PASSWORD HASH ERROR:", error);
     return res.status(500).json({ message: "Hashing failed" });
   }
 });

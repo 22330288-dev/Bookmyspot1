@@ -24,30 +24,37 @@ export default function AdminDashboard() {
           <button
             className="admin-btn"
             onClick={() => navigate("/admin-restaurants")}
-          
           >
             Manage Restaurants
           </button>
 
           <button
             className="admin-btn"
-            onClick={() => navigate("/admin/venues/cafes")}
+            onClick={() => navigate("/admin-cafes")}
           >
             Manage Cafes
           </button>
 
           <button
             className="admin-btn"
-            onClick={() => navigate("/admin/venues/wedding-halls")}
+            onClick={() => navigate("/admin-wedding-halls")}
           >
             Manage Wedding Halls
           </button>
 
           <button
             className="admin-btn"
-            onClick={() => navigate("/admin/venues/event-venues")}
+            onClick={() => navigate("/admin-event-venues")}
           >
             Manage Event Venues
+          </button>
+
+          {/* 🔥 NEW BUTTON */}
+          <button
+            className="admin-btn"
+            onClick={() => navigate("/scan-booking-qr")}
+          >
+            Scan Booking QR
           </button>
 
           <button className="logout-btn" onClick={handleLogout}>

@@ -1,0 +1,358 @@
+.event-map-page {
+  min-height: 100vh;
+  height: 100vh;
+  background: #f3efeb;
+  font-family: Georgia, "Times New Roman", serif;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.event-map-shell {
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr) 255px;
+  gap: 12px;
+  padding: 10px;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.event-tools-sidebar,
+.event-properties-sidebar {
+  height: calc(100vh - 20px);
+  overflow-y: auto;
+  background: #ffffff;
+  padding: 14px;
+  box-sizing: border-box;
+  border-radius: 18px;
+}
+
+.event-tools-sidebar h2,
+.event-properties-sidebar h2 {
+  margin: 0 0 10px;
+  color: #1d1714;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.event-back-btn {
+  height: 34px;
+  border: none;
+  background: #ece7e2;
+  color: #4b3425;
+  border-radius: 11px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.event-tool-btn,
+.event-save-btn {
+  width: 100%;
+  min-height: 38px;
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 11px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
+  cursor: pointer;
+}
+
+.event-tool-btn {
+  background: #ebe7e2;
+  color: #1f1b18;
+}
+
+.event-tool-btn:hover {
+  background: #ded8cf;
+}
+
+.event-save-btn {
+  background: #237a42;
+  color: white;
+}
+
+.event-save-btn:hover {
+  background: #1c6536;
+}
+
+.event-map-middle {
+  height: calc(100vh - 20px);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.event-map-heading {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 9px 14px;
+  margin-bottom: 8px;
+  height: 58px;
+  box-sizing: border-box;
+}
+
+.event-map-heading h1 {
+  margin: 0;
+  color: #1d1714;
+  font-size: 21px;
+  line-height: 1.1;
+}
+
+.event-map-heading p {
+  margin: 5px 0 0;
+  color: #7b5d48;
+  font-size: 13px;
+}
+
+.event-floor-map {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 88px);
+  background: #e1b879;
+  border: 5px solid #111;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.event-map-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+  font-weight: 700;
+  user-select: none;
+  cursor: pointer;
+  color: #2b1d14;
+  font-size: 12px;
+  line-height: 1.1;
+  padding: 2px;
+}
+
+.event-map-item.round-table {
+  background: #d7a46e;
+  border: 2px solid #8b5e3c;
+  border-radius: 50%;
+}
+
+.event-map-item.rect-table,
+.event-map-item.square-table {
+  background: #d7a46e;
+  border: 2px solid #8b5e3c;
+  border-radius: 10px;
+}
+
+.event-map-item.chair {
+  background: #ffffff;
+  border: 2px solid #9f9f9f;
+  border-radius: 50%;
+  color: #226b34;
+  font-size: 9px;
+}
+
+.event-map-item.window {
+  background: #d9f1ff;
+  border: 2px solid #4aa3c7;
+  border-radius: 8px;
+  color: #24506a;
+  font-size: 11px;
+}
+
+.event-map-item.door {
+  background: #8b5e3c;
+  border: 2px solid #5a351d;
+  border-radius: 8px;
+  color: white;
+  font-size: 11px;
+}
+
+.event-map-item.bar {
+  background: #8b5e3c;
+  border: 2px solid #5a351d;
+  border-radius: 14px;
+  color: white;
+}
+
+.event-map-item.pool {
+  background: #9bdcf5;
+  border: 2px solid #3698bd;
+  border-radius: 28px;
+  color: #0f4f6b;
+}
+
+.event-map-item.wall {
+  background: #111111;
+  border-radius: 6px;
+  color: transparent;
+  padding: 0;
+}
+
+.event-map-item.sofa {
+  background: #d9d4cf;
+  border: 2px solid #9f968d;
+  border-radius: 14px;
+  color: #4b423b;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.event-map-item.plant {
+  background: #d8f3dc;
+  border: 2px solid #4f8f5b;
+  border-radius: 50%;
+  color: #2f6b2f;
+  font-size: 11px;
+}
+
+.event-selected-item {
+  outline: 3px solid #2563eb;
+  outline-offset: 2px;
+  z-index: 50;
+}
+
+.empty-properties {
+  color: #777;
+  font-size: 16px;
+  line-height: 1.35;
+  margin-top: 12px;
+}
+
+.event-properties-form label {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 3px;
+  font-weight: 700;
+  color: #1d1714;
+  font-size: 12px;
+}
+
+.event-properties-form input,
+.event-properties-form select {
+  width: 100%;
+  height: 31px;
+  border: 1.5px solid #d8cec5;
+  border-radius: 8px;
+  padding: 0 7px;
+  box-sizing: border-box;
+  font-size: 12px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.event-two-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.event-linked-text {
+  color: #7a1f1f;
+  font-size: 12px;
+  line-height: 1.25;
+  margin: 8px 0 0;
+}
+
+.event-move-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.event-move-buttons button {
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: #d0a47b;
+  color: white;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.event-move-buttons button:hover {
+  background: #b98555;
+}
+
+.event-missing-box {
+  background: white;
+  padding: 24px;
+  border-radius: 18px;
+  margin: 30px;
+}
+
+.event-missing-box button {
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: #6f4e37;
+  color: white;
+  padding: 0 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1150px) {
+  .event-map-shell {
+    grid-template-columns: 210px minmax(0, 1fr) 230px;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .event-tools-sidebar,
+  .event-properties-sidebar {
+    padding: 10px;
+  }
+
+  .event-tool-btn,
+  .event-save-btn {
+    min-height: 34px;
+    font-size: 12px;
+  }
+
+  .event-tools-sidebar h2,
+  .event-properties-sidebar h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 950px) {
+  .event-map-page {
+    height: auto;
+    overflow: auto;
+  }
+
+  .event-map-shell {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .event-tools-sidebar,
+  .event-properties-sidebar,
+  .event-map-middle {
+    height: auto;
+  }
+
+  .event-floor-map {
+    height: 620px;
+    min-width: 900px;
+  }
+
+  .event-map-middle {
+    overflow-x: auto;
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye } from "lucide-react";
 import "./Auth.css";
 
 export default function Signup() {
@@ -16,15 +16,37 @@ export default function Signup() {
   });
 
   const [errors, setErrors] = useState({});
+  const [passwordTouched, setPasswordTouched] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
 
+    let newValue = value;
+
+    if (name === "phone") {
+      newValue = value.replace(/\D/g, "");
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: newValue,
     }));
   }
+
+  const passwordChecks = {
+    minLength: formData.password.length >= 8,
+    lowerCase: /[a-z]/.test(formData.password),
+    upperCase: /[A-Z]/.test(formData.password),
+    number: /\d/.test(formData.password),
+    specialChar: /[!@#$%^&*(){}:"<>?]/.test(formData.password),
+  };
+
+  const isPasswordStrong =
+    passwordChecks.minLength &&
+    passwordChecks.lowerCase &&
+    passwordChecks.upperCase &&
+    passwordChecks.number &&
+    passwordChecks.specialChar;
 
   function validateForm() {
     const newErrors = {};
@@ -41,12 +63,16 @@ export default function Signup() {
 
     if (!formData.password.trim()) {
       newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
+    } else if (!isPasswordStrong) {
+      newErrors.password = "Please enter a strong password";
     }
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
+    } else if (!/^\d+$/.test(formData.phone)) {
+      newErrors.phone = "Phone number must contain numbers only";
+    } else if (formData.phone.length < 7) {
+      newErrors.phone = "Phone number must be at least 7 digits";
     }
 
     return newErrors;
@@ -58,20 +84,25 @@ export default function Signup() {
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
+    if (!passwordTouched) {
+      setPasswordTouched(true);
+    }
+
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:5000/api/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullName: formData.fullName,
-            email: formData.email,
-            password: formData.password,
-            phone: formData.phone,
-          }),
-        });
+       const response = await fetch("http://localhost:5000/api/auth/register", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    fullName: formData.fullName,
+    email: formData.email,
+    password: formData.password,
+    phone: formData.phone,
+  }),
+});
+      
 
         const data = await response.json();
 
@@ -94,6 +125,7 @@ export default function Signup() {
       }
     }
   }
+
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -139,24 +171,53 @@ export default function Signup() {
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
+                onFocus={() => setPasswordTouched(true)}
               />
-              <button
-                type="button"
-                className="eye-btn"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={22} /> : <Eye size={22} />}
-              </button>
+             <button
+  type="button"
+  className="eye-btn"
+  onClick={() => setShowPassword(!showPassword)}
+>
+  <Eye size={22} />
+</button>
             </div>
+
+            {passwordTouched && (
+              <div className="password-rules-box">
+                <p className="password-rules-title">Your password must contain:</p>
+
+                <p className={passwordChecks.minLength ? "rule-valid" : "rule-invalid"}>
+                  ✓ At least 8 characters
+                </p>
+
+                <p className={passwordChecks.lowerCase ? "rule-valid" : "rule-invalid"}>
+                  ✓ Lower case letters (a-z)
+                </p>
+
+                <p className={passwordChecks.upperCase ? "rule-valid" : "rule-invalid"}>
+                  ✓ Upper case letters (A-Z)
+                </p>
+
+                <p className={passwordChecks.number ? "rule-valid" : "rule-invalid"}>
+                  ✓ Numbers (0-9)
+                </p>
+
+                <p className={passwordChecks.specialChar ? "rule-valid" : "rule-invalid"}>
+                  ✓ Special characters (!@#$%^&*(){}:"&lt;&gt;?)
+                </p>
+              </div>
+            )}
+
             {errors.password && <p className="error-text">{errors.password}</p>}
 
             <label>Phone Number</label>
             <input
               type="text"
               name="phone"
-              placeholder="+1 234 567 8900"
+              placeholder="Enter phone number"
               value={formData.phone}
               onChange={handleChange}
+              maxLength={15}
             />
             {errors.phone && <p className="error-text">{errors.phone}</p>}
 

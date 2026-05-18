@@ -6,7 +6,7 @@
 
 .book-container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1500px;
   margin: 0 auto;
   padding-bottom: 40px;
 }
@@ -16,6 +16,8 @@
   width: 100%;
   height: 360px;
   overflow: hidden;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .book-top-image img {
@@ -28,11 +30,11 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 50px;
-  height: 50px;
+  width: 52px;
+  height: 52px;
   border: none;
   border-radius: 50%;
-  background: rgba(29, 23, 20, 0.7);
+  background: rgba(29, 23, 20, 0.72);
   color: white;
   display: flex;
   align-items: center;
@@ -45,7 +47,7 @@
 .reservation-details-card {
   background: #ffffff;
   border: 1.5px solid #ddd6cf;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 24px;
   margin: 20px;
 }
@@ -73,7 +75,7 @@
 
 .contact-actions {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   margin-top: 22px;
   flex-wrap: wrap;
 }
@@ -83,39 +85,51 @@
   background: #ece7e2;
   color: #6f4e37;
   border-radius: 14px;
-  min-width: 130px;
-  height: 54px;
-  display: flex;
+  min-width: 140px;
+  height: 52px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-weight: 700;
+  font-size: 18px;
+  padding: 0 18px;
+  border: 1px solid #ddd6cf;
+  transition: 0.2s ease;
+}
+
+.contact-btn:hover {
+  background: #d0a47b;
+  color: white;
 }
 
 .table-map-card h2,
 .reservation-details-card h2 {
   margin-top: 0;
+  margin-bottom: 18px;
   color: #1d1714;
+  font-size: 30px;
 }
 
 .table-legend {
   display: flex;
-  gap: 22px;
+  gap: 26px;
   color: #8f735b;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
+  font-size: 18px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .legend-box {
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 7px;
   display: inline-block;
 }
 
@@ -129,78 +143,9 @@
   border: 1px solid #d9534f;
 }
 
-.table-map {
-  position: relative;
-  width: 100%;
-  height: 520px;
-  background: #fbf9f7;
-  border-radius: 18px;
-  overflow: hidden;
-}
-
-.table-shape {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  user-select: none;
-  box-sizing: border-box;
-}
-
-.table-shape.round {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.table-shape.rect {
-  width: 130px;
-  height: 80px;
-  border-radius: 16px;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.table-shape.square {
-  width: 90px;
-  height: 90px;
-  border-radius: 14px;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.table-shape.chair {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #d8f3dc;
-  color: #245224;
-  border: 2px solid #74c69d;
-  font-size: 11px;
-  z-index: 1;
-}
-
-.table-shape.reserved:not(.chair) {
-  background: #f4a6a6;
-  color: #8a2222;
-  border-color: #d9534f;
-  cursor: not-allowed;
-}
-
-.selected-table {
-  box-shadow: 0 0 0 4px #d0a47b;
+.legend-box.chair-selected {
+  background: #d0a47b;
+  border: 1px solid #b78657;
 }
 
 .reserve-label {
@@ -209,19 +154,20 @@
   gap: 10px;
   margin: 16px 0 8px;
   color: #1d1714;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .book-input {
   width: 100%;
-  height: 56px;
+  height: 54px;
   border: 1.5px solid #ddd6cf;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 0 16px;
   font-size: 16px;
   box-sizing: border-box;
   font-family: Georgia, "Times New Roman", serif;
   background: white;
+  margin-bottom: 14px;
 }
 
 .selected-info {
@@ -238,7 +184,7 @@
 
 .create-seats-btn {
   width: calc(100% - 40px);
-  margin: 0 20px 0;
+  margin: 10px 20px 0;
   height: 60px;
   border: 1.5px solid #ddd6cf;
   border-radius: 16px;
@@ -252,139 +198,1080 @@
 
 .payment-btn {
   width: 100%;
-  margin-top: 16px;
-  height: 68px;
+  margin-top: 18px;
+  height: 62px;
   border: none;
   border-radius: 16px;
   background: #d0a47b;
   color: white;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+.payment-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.section-top-card {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+/* =========================
+   MAP + DETAILS SEPARATED
+========================= */
+
+.booking-main-split {
+  display: grid;
+  grid-template-columns: minmax(0, 3.35fr) minmax(360px, 1fr);
+  gap: 42px;
+  align-items: start;
+  margin: 32px 34px 0;
+}
+
+.booking-map-side {
+  min-width: 0;
+}
+
+.booking-details-side {
+  min-width: 360px;
+  position: sticky;
+  top: 18px;
+}
+
+/* each card is independent */
+.booking-main-split .table-map-card {
+  margin: 0;
+  width: 100%;
+  border-radius: 26px;
+  padding: 26px;
+  overflow-x: auto;
+}
+
+.booking-main-split .reservation-details-card {
+  margin: 0;
+  width: 100%;
+  border-radius: 26px;
+  padding: 28px;
+}
+
+/* Reservation Details card design */
+.booking-details-side .reservation-details-card h2 {
+  font-size: 30px;
+  margin-bottom: 22px;
+}
+
+.booking-details-side .reserve-label {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.booking-details-side .book-input {
+  height: 54px;
+  font-size: 16px;
+  border-radius: 16px;
+  padding: 0 16px;
+}
+
+.booking-details-side .selected-info {
+  margin-top: 24px;
+  font-size: 15px;
+  padding: 18px;
+  border-radius: 16px;
+}
+
+.booking-details-side .selected-info p {
+  margin: 7px 0;
+}
+
+.booking-details-side .payment-btn {
+  height: 58px;
+  font-size: 17px;
+}
+
+/* =========================
+   MAP SYSTEM
+========================= */
+
+.table-map-card {
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-floor-map {
+  position: relative;
+  width: 100%;
+  min-width: 1050px;
+  height: 650px;
+  min-height: 650px;
+  background: #e1b879;
+  border: 6px solid #111;
+  border-radius: 14px;
+  overflow: auto;
+  padding: 0;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.admin-map-item {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  text-align: center;
+  user-select: none;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.admin-map-item.round-table {
+  background: #8b5e3c;
+  border: 3px solid #8d5d2f;
+  border-radius: 50%;
+  color: white;
+}
+
+.admin-map-item.rect-table,
+.admin-map-item.square-table {
+  background: #8b5e3c;
+  border: 3px solid #8d5d2f;
+  border-radius: 12px;
+  color: white;
+}
+
+.admin-map-item.chair {
+  background: #d6a679;
+  border: 2px solid #8b5e3c;
+  border-radius: 8px;
+}
+
+.admin-map-item.window {
+  background: #d9f1ff;
+  border: 2px solid #4aa3c7;
+  border-radius: 8px;
+  color: #24506a;
+  font-size: 12px;
+}
+
+.admin-map-item.door {
+  background: #cfa06b;
+  border: 2px solid #704214;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.admin-map-item.bar {
+  background: #2f221a;
+  border: 2px solid #1e1510;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.admin-map-item.pool {
+  background: #9bdcf5;
+  border: 2px solid #3698bd;
+  border-radius: 30px;
+  color: #0f4f6b;
+  font-size: 13px;
+}
+
+.admin-map-item.wall {
+  background: #111;
+  border-radius: 6px;
+}
+
+.admin-map-item.sofa {
+  background: #d9d4cf;
+  border: 2px solid #9f968d;
+  border-radius: 18px;
+  color: #4b423b;
+  font-size: 13px;
+}
+
+.admin-map-item.plant {
+  background: #d8f3dc;
+  border: 2px solid #4f8f5b;
+  border-radius: 50%;
+  color: #2f6b2f;
+  font-size: 12px;
+}
+
+.admin-map-item.dance-floor {
+  background: #d9b77e;
+  border: 2px dashed #8b5e2c;
+  border-radius: 14px;
+  color: #4b2e16;
+}
+
+.admin-map-item.bride-groom-stage {
+  background: #f7dce8;
+  border: 2px solid #b56b88;
+  border-radius: 18px;
+  color: #7a2948;
+}
+
+.clickable-item {
+  cursor: pointer !important;
+}
+
+.no-map-message {
+  text-align: center;
+  color: #6f4e37;
+  font-size: 18px;
+  padding: 40px 20px;
+}
+
+/* =========================
+   RESERVED / SELECTED ITEMS
+========================= */
+
+.reserved-item,
+.admin-map-item.reserved {
+  background: #ff9b9b !important;
+  border: 2px solid #c0392b !important;
+  cursor: not-allowed;
+}
+
+.admin-map-item.round-table.reserved-item,
+.admin-map-item.rect-table.reserved-item,
+.admin-map-item.square-table.reserved-item,
+.admin-map-item.chair.reserved-item,
+.admin-map-item.sofa.reserved-item {
+  background: #e53935 !important;
+  border-color: #b71c1c !important;
+  color: white !important;
+}
+
+.reserved-map-item {
+  background-color: #d9785f !important;
+  border: 3px solid #a65b45 !important;
+  color: #7b4b3b !important;
+  box-shadow: none !important;
+  z-index: 55 !important;
+}
+
+.reserved-map-item.chair,
+.reserved-map-item.sofa {
+  background-color: #d9785f !important;
+  border: 3px solid #a65b45 !important;
+  color: transparent !important;
+}
+
+.selected-book-item {
+  border: 4px solid #e91e63 !important;
+  background-color: #ffc1dc !important;
+  color: #7b1b45 !important;
+  box-shadow: 0 0 18px rgba(233, 30, 99, 0.6);
+  z-index: 50 !important;
+}
+
+.selected-admin-item {
+  outline: 4px solid #3b82f6;
+  outline-offset: 3px;
+}
+
+.my-booking-green {
+  border: 4px solid #2e7d32 !important;
+  background-color: #b9f6ca !important;
+  color: #1b5e20 !important;
+  box-shadow: 0 0 18px rgba(46, 125, 50, 0.7);
+  z-index: 60 !important;
+}
+
+.booking-number-on-table {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: #8b0000;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+/* =========================
+   LOCATION LINKS
+========================= */
+
+.location-link {
+  color: #6f4e37;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.location-link:hover {
+  text-decoration: underline;
+  color: #a06d3b;
+}
+
+.location-click-btn {
+  background: transparent;
+  border: none;
+  color: #6b4a2b;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+}
+
+.location-click-btn:hover {
+  color: #a1773f;
+}
+
+.cafe-location-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cafe-location-icon {
+  color: #2b241f;
+}
+
+.cafe-location-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #7b5d48;
+  text-align: left;
+}
+
+.cafe-location-btn:hover {
+  color: #5a3b25;
+  text-decoration: underline;
+}
+
+/* =========================
+   WEDDING / EVENT LABELS
+========================= */
+
+.wedding-table-label {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #3b2a1a;
+  word-break: break-word;
+  line-height: 1.1;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.wedding-chair-label {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 9px;
+  font-weight: bold;
+  color: #1b5e20;
+  word-break: break-word;
+  line-height: 1;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+/* =========================
+   GUEST SEARCH
+========================= */
+
+.guest-search-box {
+  margin: 14px 0 18px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #fff8ef;
+  border: 1px solid #e3c9a7;
+}
+
+.guest-search-box label {
+  display: block;
+  font-weight: bold;
+  color: #5b3a20;
+  margin-bottom: 8px;
   font-family: Georgia, "Times New Roman", serif;
 }
 
+.guest-search-result {
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.guest-search-result.found {
+  color: #1b5e20;
+}
+
+.guest-search-result.not-found {
+  color: #b71c1c;
+}
+
+.guest-search-green {
+  border: 4px solid #2e7d32 !important;
+  background-color: #b9f6ca !important;
+  color: #1b5e20 !important;
+  box-shadow: 0 0 18px rgba(46, 125, 50, 0.75);
+  z-index: 90 !important;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1150px) {
+  .booking-main-split {
+    grid-template-columns: 1fr;
+    margin: 24px 20px 0;
+  }
+
+  .booking-details-side {
+    position: static;
+    min-width: 0;
+  }
+
+  .admin-floor-map {
+    min-width: 1050px;
+  }
+}
+
 @media (max-width: 768px) {
+  .book-container {
+    max-width: 100%;
+  }
+
   .book-top-image {
     height: 260px;
+  }
+
+  .book-info-card,
+  .table-map-card,
+  .reservation-details-card {
+    margin: 14px;
+    padding: 18px;
+  }
+
+  .booking-main-split {
+    margin: 18px 14px 0;
+    gap: 18px;
   }
 
   .book-info-card h1 {
     font-size: 28px;
   }
 
-  .table-map {
-    height: 400px;
-  }
-
-  .table-shape.round {
-    width: 60px;
-    height: 60px;
-  }
-
-  .table-shape.rect {
-    width: 95px;
-    height: 60px;
-  }
-
-  .table-shape.square {
-    width: 64px;
-    height: 64px;
-  }
-
-  .table-shape.chair {
-    width: 22px;
-    height: 22px;
-    font-size: 9px;
-  }
-
   .payment-btn,
   .create-seats-btn {
     font-size: 18px;
-    height: 60px;
+    height: 58px;
+  }
+
+  .contact-btn {
+    min-width: 115px;
+    font-size: 16px;
+    height: 48px;
+  }
+
+  .admin-floor-map {
+    min-width: 1050px;
+    height: 620px;
   }
 }
-.legend-box.chair-selected {
-  background: #d0a47b;
-  border: 1px solid #b78657;
+/* =========================
+   SMALL RESERVATION DETAILS + BIG GAP
+========================= */
+
+.booking-main-split {
+  display: grid;
+  grid-template-columns: minmax(0, 4.4fr) 310px;
+  gap: 55px;
+  align-items: start;
+  margin: 32px 42px 0;
 }
 
-.table-shape {
-  position: absolute;
+.booking-map-side {
+  min-width: 0;
+}
+
+.booking-details-side {
+  width: 310px;
+  min-width: 310px;
+  position: sticky;
+  top: 18px;
+}
+
+.booking-main-split .table-map-card {
+  margin: 0;
+  width: 100%;
+  border-radius: 26px;
+  padding: 26px;
+}
+
+.booking-main-split .reservation-details-card {
+  margin: 0;
+  width: 100%;
+  border-radius: 24px;
+  padding: 18px;
+}
+
+/* make Reservation Details smaller */
+.booking-details-side .reservation-details-card h2 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.booking-details-side .reserve-label {
+  margin-top: 12px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  gap: 8px;
+}
+
+.booking-details-side .book-input {
+  height: 42px;
+  font-size: 14px;
+  border-radius: 12px;
+  padding: 0 12px;
+  margin-bottom: 10px;
+}
+
+.booking-details-side .selected-info {
+  margin-top: 14px;
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.booking-details-side .selected-info p {
+  margin: 5px 0;
+}
+
+.booking-details-side .payment-btn {
+  height: 48px;
+  font-size: 15px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+@media (max-width: 1150px) {
+  .booking-main-split {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin: 24px 20px 0;
+  }
+
+  .booking-details-side {
+    width: 100%;
+    min-width: 0;
+    position: static;
+  }
+}
+.create-map-page {
+  min-height: 100vh;
+  background: #f3efeb;
+  padding: 24px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.create-map-layout {
+  display: grid;
+  grid-template-columns: 370px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.map-sidebar {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 26px;
+}
+
+.map-sidebar-title {
+  margin: 20px 0 22px;
+  font-size: 28px;
+  color: #1f1b18;
+}
+
+.map-tool-btn,
+.map-save-btn {
+  width: 100%;
+  min-height: 56px;
+  border: none;
+  border-radius: 16px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
+  padding: 0 18px;
+  font-size: 16px;
   font-weight: 700;
-  user-select: none;
+  font-family: Georgia, "Times New Roman", serif;
+  cursor: pointer;
+}
+
+.map-tool-btn {
+  background: #ebe7e2;
+  color: #1f1b18;
+}
+
+.map-tool-btn.danger {
+  color: #8b1e1e;
+}
+
+.map-save-btn {
+  background: #237a42;
+  color: white;
+  justify-content: center;
+}
+
+.map-help-text {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.map-canvas-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 18px;
+  overflow: auto;
+}
+
+.map-page-heading h1 {
+  margin: 0;
+  color: #1d1714;
+}
+
+.map-page-heading p {
+  color: #7b5d48;
+}
+
+.event-create-map {
+  min-width: 1050px;
+  height: 720px;
+}
+
+.item-editor-box {
+  margin-top: 20px;
+  background: #f7f3ef;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.item-editor-box h3 {
+  margin-top: 0;
+}
+
+.item-editor-box label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.item-editor-box input,
+.item-editor-box select {
+  width: 100%;
+  height: 38px;
+  margin-top: 5px;
+  border: 1px solid #d8cec5;
+  border-radius: 10px;
+  padding: 0 10px;
+  box-sizing: border-box;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.linked-table-text {
+  color: #7a1f1f;
+  font-size: 14px;
+}
+
+.move-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.move-buttons button {
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: #d0a47b;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .create-map-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.designer-item.bride-groom-stage,
+.admin-map-item.bride-groom-stage {
+  background: #f7dce8 !important;
+  border: 3px solid #b56b88 !important;
+  border-radius: 18px !important;
+  color: #7a2948 !important;
+  font-weight: 800 !important;
+  text-align: center;
+}
+
+.designer-item.bride-groom-stage span,
+.admin-map-item.bride-groom-stage span {
+  display: block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.1;
+}
+/* SAME EVENT MAP SIZE EVERYWHERE */
+.event-fixed-board,
+.designer-board.event-fixed-board,
+.admin-floor-map.event-fixed-board {
+  position: relative !important;
+  width: 1200px !important;
+  height: 760px !important;
+  min-width: 1200px !important;
+  min-height: 760px !important;
+  background: #e1b879 !important;
+  border: 8px solid #111 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* make items use exact saved x/y */
+.event-fixed-board .designer-item,
+.event-fixed-board .admin-map-item {
+  position: absolute !important;
+  box-sizing: border-box !important;
+}
+
+/* stage shape */
+.designer-item.bride-groom-stage,
+.admin-map-item.bride-groom-stage {
+  background: #f7dce8 !important;
+  border: 3px solid #b56b88 !important;
+  border-radius: 18px !important;
+  color: #7a2948 !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+/* pool shape */
+.designer-item.pool,
+.admin-map-item.pool {
+  background: #9bdcf5 !important;
+  border: 3px solid #3698bd !important;
+  border-radius: 35px !important;
+  color: #0f4f6b !important;
+  font-weight: 800 !important;
+}
+
+/* if map is bigger than screen, scroll container only */
+.designer-main-area,
+.booking-map-side,
+.table-map-card {
+  overflow: auto !important;
+}
+.booking-search-highlight {
+  outline: 5px solid #1b8f3a !important;
+  outline-offset: 5px !important;
+  box-shadow: 0 0 22px rgba(27, 143, 58, 0.9) !important;
+  z-index: 100 !important;
+}
+
+.booking-search-highlight .booking-number-on-table {
+  color: #064d1f !important;
+  font-weight: 900 !important;
+}
+/* =========================
+   CAFE MAP 80% + DETAILS 20%
+========================= */
+
+.cafe-booking-split {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(260px, 1fr);
+  gap: 34px;
+  align-items: start;
+  margin: 26px 20px;
   box-sizing: border-box;
 }
 
-.table-shape.round {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
+.cafe-map-side {
+  min-width: 0;
 }
 
-.table-shape.rect {
-  width: 130px;
-  height: 80px;
-  border-radius: 16px;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
+.cafe-details-side {
+  min-width: 260px;
+  position: sticky;
+  top: 18px;
 }
 
-.table-shape.square {
-  width: 90px;
-  height: 90px;
-  border-radius: 14px;
-  background: #f3efe9;
-  color: #1d1714;
-  border: 2px solid #d0a47b;
-  cursor: pointer;
-  z-index: 2;
+.cafe-booking-split .table-map-card,
+.cafe-booking-split .reservation-details-card {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.table-shape.chair {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: #d8f3dc;
-  color: #245224;
-  border: 2px solid #74c69d;
-  font-size: 11px;
-  z-index: 1;
-  cursor: pointer;
-  transition: 0.2s ease;
+.cafe-map-side .table-map-card {
+  padding: 24px;
+  overflow-x: auto;
 }
 
-.table-shape.chair:hover {
-  transform: scale(1.08);
+.cafe-details-side .reservation-details-card {
+  padding: 18px;
+  border-radius: 22px;
 }
 
-.chair-active-table {
-  box-shadow: 0 0 0 3px rgba(208, 164, 123, 0.22);
+.cafe-details-side .reservation-details-card h2 {
+  font-size: 24px;
+  margin-bottom: 14px;
 }
 
-.chair-selected {
-  background: #d0a47b !important;
-  border-color: #b78657 !important;
-  color: white !important;
+.cafe-details-side .reserve-label {
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 6px;
 }
 
-.table-shape.reserved:not(.chair) {
-  background: #f4a6a6;
-  color: #8a2222;
-  border-color: #d9534f;
-  cursor: not-allowed;
+.cafe-details-side .book-input {
+  height: 42px;
+  font-size: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
-.selected-table {
-  box-shadow: 0 0 0 4px #d0a47b;
+.cafe-details-side .selected-info {
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.cafe-details-side .selected-info p {
+  margin: 5px 0;
+}
+
+.cafe-details-side .payment-btn {
+  height: 48px;
+  font-size: 15px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.cafe-map-side .admin-floor-map {
+  width: 100%;
+  min-width: 980px;
+  height: 650px;
+}
+
+@media (max-width: 1150px) {
+  .cafe-booking-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .cafe-details-side {
+    position: static;
+  }
+}
+/* =========================
+   RESTAURANT / WEDDING / EVENT
+   MAP 80% + DETAILS 20%
+========================= */
+
+.booking-main-split {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(260px, 1fr);
+  gap: 34px;
+  align-items: start;
+  margin: 26px 20px;
+  box-sizing: border-box;
+}
+
+.booking-map-side {
+  min-width: 0;
+}
+
+.booking-details-side {
+  min-width: 260px;
+  position: sticky;
+  top: 18px;
+}
+
+.booking-main-split .table-map-card,
+.booking-main-split .reservation-details-card {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.booking-map-side .table-map-card {
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.booking-details-side .reservation-details-card {
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.booking-details-side .reservation-details-card h2 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.booking-details-side .reserve-label {
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.booking-details-side .book-input {
+  height: 42px;
+  font-size: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.booking-details-side .selected-info {
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.booking-details-side .selected-info p {
+  margin: 5px 0;
+}
+
+.booking-details-side .payment-btn {
+  height: 48px;
+  font-size: 15px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.booking-map-side .admin-floor-map {
+  width: 100%;
+  min-width: 980px;
+  height: 650px;
+}
+
+@media (max-width: 1150px) {
+  .booking-main-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .booking-details-side {
+    position: static;
+  }
+}
+/* =========================
+   RESTAURANT / WEDDING / EVENT
+   MAP 80% + DETAILS 20%
+========================= */
+
+.booking-main-split {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(260px, 1fr);
+  gap: 34px;
+  align-items: start;
+  margin: 26px 20px;
+  box-sizing: border-box;
+}
+
+.booking-map-side {
+  min-width: 0;
+}
+
+.booking-details-side {
+  min-width: 260px;
+  position: sticky;
+  top: 18px;
+}
+
+.booking-main-split .table-map-card,
+.booking-main-split .reservation-details-card {
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.booking-map-side .table-map-card {
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.booking-details-side .reservation-details-card {
+  padding: 18px;
+  border-radius: 22px;
+}
+
+.booking-details-side .reservation-details-card h2 {
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+
+.booking-details-side .reserve-label {
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 6px;
+}
+
+.booking-details-side .book-input {
+  height: 42px;
+  font-size: 14px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.booking-details-side .selected-info {
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.booking-details-side .selected-info p {
+  margin: 5px 0;
+}
+
+.booking-details-side .payment-btn {
+  height: 48px;
+  font-size: 15px;
+  border-radius: 12px;
+  margin-top: 14px;
+}
+
+.booking-map-side .admin-floor-map {
+  width: 100%;
+  min-width: 980px;
+  height: 650px;
+}
+
+@media (max-width: 1150px) {
+  .booking-main-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .booking-details-side {
+    position: static;
+  }
 }

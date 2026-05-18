@@ -209,3 +209,24 @@
     font-size: 19px;
   }
 }
+.payment-note {
+  font-size: 16px;
+  color: #5c4634;
+  line-height: 1.6;
+  margin: 0;
+}
+.payment-note {
+  font-size: 16px;
+  color: #5c4634;
+  line-height: 1.6;
+  margin: 10px 0 0;
+}
+
+.method-option:hover {
+  border-color: #8a6245;
+  transition: 0.2s ease;
+}
+
+.method-option:last-child {
+  margin-bottom: 0;
+}

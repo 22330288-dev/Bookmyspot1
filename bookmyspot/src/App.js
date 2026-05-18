@@ -33,6 +33,27 @@ import ConfirmationPage from "./pages/ConfirmationPage";
 import AdminRestaurants from "./pages/AdminRestaurants";
 import AdminBookVenue from "./pages/AdminBookVenue";
 import CreateRestaurantMap from "./pages/CreateRestaurantMap";
+import AdminLocations from "./pages/AdminLocations";
+import AdminSections from "./pages/AdminSections";
+import AdminAreas from "./pages/AdminAreas";
+import AdminCafes from "./pages/AdminCafes";
+import AdminWeddingHalls from "./pages/AdminWeddingHalls";
+import AdminEventVenues from "./pages/AdminEventVenues";
+import AdminBookCafe from "./pages/AdminBookCafe";
+import CreateCafeMap from "./pages/CreateCafeMap";
+import BookVenueCafe from "./pages/BookVenueCafe";
+import AdminBookWeddingHall from "./pages/AdminBookWeddingHall";
+import CreateWeddingHallMap from "./pages/CreateWeddingHallMap";
+import BookWeddingHall from "./pages/BookWeddingHall";
+import ScanBookingQR from "./pages/ScanBookingQR";
+import CreateUserWeddingMap from "./pages/CreateUserWeddingMap";
+import MyBookings from "./pages/MyBookings";
+import BookingQR from "./pages/BookingQR";
+import BookEventVenue from "./pages/BookEventVenue";
+import AdminBookEventVenue from "./pages/AdminBookEventVenue";
+import CreateEventMap from "./pages/CreateEventMap";
+import CreateUserEventMap from "./pages/CreateUserEventMap";
+
 
 
 function App() {
@@ -73,6 +94,32 @@ function App() {
 <Route path="/admin-restaurants" element={<AdminRestaurants />} />
 <Route path="/admin-book-venue" element={<AdminBookVenue />} />
 <Route path="/create-restaurant-map" element={<CreateRestaurantMap />} />
+<Route path="/admin/locations" element={<AdminLocations />} />
+<Route path="/admin/sections" element={<AdminSections />} />
+<Route path="/admin/areas" element={<AdminAreas />} />
+<Route path="/admin-cafes" element={<AdminCafes />} />
+<Route path="/create-wedding-hall-map" element={<CreateWeddingHallMap />} />
+<Route path="/admin-book-wedding-hall" element={<AdminBookWeddingHall />} />
+<Route path="/admin-wedding-halls" element={<AdminWeddingHalls />} />
+<Route path="/admin-event-venues" element={<AdminEventVenues />} />
+<Route path="/admin-book-cafe" element={<AdminBookCafe />} />
+<Route path="/create-cafe-map" element={<CreateCafeMap />} />
+<Route path="/book-venue-cafe" element={<BookVenueCafe />} />
+<Route path="/book-wedding-hall" element={<BookWeddingHall />} />
+<Route path="/scan-booking-qr" element={<ScanBookingQR />} />
+<Route path="/admin/scan-qr" element={<ScanBookingQR />} />
+<Route path="/create-user-wedding-map" element={<CreateUserWeddingMap />} />
+<Route path="/my-bookings" element={<MyBookings />} />
+<Route path="/book-venue/:venueId" element={<BookVenue />} />
+<Route path="/book-venue-cafe/:venueId" element={<BookVenueCafe />} />
+<Route path="/book-wedding-hall/:venueId" element={<BookWeddingHall />} />
+<Route path="/booking-qr/:bookingNumber" element={<BookingQR />} />
+<Route path="/book-event-venue" element={<BookEventVenue />} />
+<Route path="/admin-book-event-venue" element={<AdminBookEventVenue />} />
+<Route path="/create-event-map" element={<CreateEventMap />} />
+<Route path="/create-user-event-map" element={<CreateUserEventMap />} />
+
+
       </Routes>
     </Router>
   );

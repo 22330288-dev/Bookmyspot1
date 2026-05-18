@@ -1,234 +1,98 @@
-import React, { useMemo, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ArrowLeft, MapPin, ChevronDown, Star } from "lucide-react";
 import "./Cafes.css";
 
 export default function Cafes() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const isGuest = location.state?.isGuest || false;
 
   const [selectedRegion, setSelectedRegion] = useState("All Regions");
+  const [selectedCuisine, setSelectedCuisine] = useState("All");
+  const [cafes, setCafes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const cafes = useMemo(() => {
-    return [
-      // ================= BEIRUT =================
-      {
-        id: 1,
-        name: "BLCK Specialty Coffee",
-        specialty: "Specialty Coffee",
-        city: "Beirut",
-        area: "Hamra",
-        rating: 4.9,
-        image: "/images/cafes/beirut/blck.jpg",
-      },
-      {
-        id: 2,
-        name: "Levant Café",
-        specialty: "Lebanese-Themed Café",
-        city: "Beirut",
-        area: "Gemmayze",
-        rating: 5.0,
-        image: "/images/cafes/beirut/levant-cafe.jpg",
-      },
-      {
-        id: 3,
-        name: "Us Coffee",
-        specialty: "Specialty / Bagels",
-        city: "Beirut",
-        area: "Minet El Hosn",
-        rating: 4.8,
-        image: "/images/cafes/beirut/us-coffee.jpg",
-      },
-      {
-        id: 4,
-        name: "Caffeine Coffee Roasters",
-        specialty: "Specialty Coffee",
-        city: "Beirut",
-        area: "Mar Mikhael",
-        rating: 4.7,
-        image: "/images/cafes/beirut/caffeine-roasters.jpg",
-      },
-      {
-        id: 5,
-        name: "Hale Café",
-        specialty: "Healthy / Smoothies",
-        city: "Beirut",
-        area: "Gemmayze",
-        rating: 4.7,
-        image: "/images/cafes/beirut/hale-cafe.jpg",
-      },
-      {
-        id: 6,
-        name: "Nayla Beirut",
-        specialty: "Cozy Bistro Café",
-        city: "Beirut",
-        area: "Mar Mikhael",
-        rating: 4.8,
-        image: "/images/cafes/beirut/nayla.jpg",
-      },
+  const cuisineOptions = [
+    { name: "All", icon: "☕" },
+    { name: "Coffee", icon: "☕" },
+    { name: "Desserts", icon: "🍰" },
+    { name: "Bakery", icon: "🥐" },
+    { name: "Ice Cream", icon: "🍨" },
+    { name: "Juice", icon: "🧃" },
+    { name: "Shisha", icon: "💨" },
+    { name: "Snacks", icon: "🍪" },
+  ];
 
-      // ================= BEKAA =================
-      {
-        id: 21,
-        name: "Croum Coffee Atelier",
-        specialty: "Artisan Roastery",
-        city: "Bekaa",
-        area: "Zahle",
-        rating: 5.0,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 22,
-        name: "OURS Café",
-        specialty: "Specialty / Cozy",
-        city: "Bekaa",
-        area: "Zahle",
-        rating: 4.7,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 23,
-        name: "Café Younes Zahle",
-        specialty: "Specialty Coffee",
-        city: "Bekaa",
-        area: "Ksara, Zahle",
-        rating: 4.5,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 24,
-        name: "Shape Shake",
-        specialty: "Bubble Tea / Health",
-        city: "Bekaa",
-        area: "Zahle",
-        rating: 4.8,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 25,
-        name: "Hooqqa Zahle",
-        specialty: "Café / Shisha",
-        city: "Bekaa",
-        area: "Zahle",
-        rating: 4.8,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-
-      // ================= SOUTH LEBANON =================
-      {
-        id: 41,
-        name: "Bab Al Saray Café",
-        specialty: "Heritage / Traditional",
-        city: "South Lebanon",
-        area: "Sidon Old City",
-        rating: 4.5,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 42,
-        name: "Kahwet Saida",
-        specialty: "Lebanese Traditional",
-        city: "South Lebanon",
-        area: "Sidon",
-        rating: 4.5,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 43,
-        name: "67 Café",
-        specialty: "Study / Chill",
-        city: "South Lebanon",
-        area: "Sidon",
-        rating: 4.4,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 44,
-        name: "Atay Resto Café",
-        specialty: "Trendy / Modern",
-        city: "South Lebanon",
-        area: "Sidon",
-        rating: 4.8,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 45,
-        name: "Friends Café",
-        specialty: "Social / 24h",
-        city: "South Lebanon",
-        area: "Tyre",
-        rating: 4.4,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-
-      // ================= NORTH LEBANON =================
-      {
-        id: 61,
-        name: "Vienna 1683",
-        specialty: "European-Style Café",
-        city: "North Lebanon",
-        area: "Tripoli",
-        rating: 4.8,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 62,
-        name: "Majd Coffee Shop",
-        specialty: "Specialty Coffee",
-        city: "North Lebanon",
-        area: "Tripoli Old Souk",
-        rating: 4.9,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 63,
-        name: "Kahve And More",
-        specialty: "Artisan Café",
-        city: "North Lebanon",
-        area: "Mina, Tripoli",
-        rating: 4.9,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 64,
-        name: "Deens Coffee Shop",
-        specialty: "Cozy / Study Café",
-        city: "North Lebanon",
-        area: "Mina, Tripoli",
-        rating: 4.7,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-      {
-        id: 65,
-        name: "Qashweh (قشوة)",
-        specialty: "Authentic Coffee",
-        city: "North Lebanon",
-        area: "Tripoli",
-        rating: 5.0,
-        image: "/images/cafes/default-cafe.jpg",
-      },
-    ];
+  useEffect(() => {
+    fetchCafes();
   }, []);
 
-  const filteredCafes =
-    selectedRegion === "All Regions"
-      ? cafes
-      : cafes.filter((item) => item.city === selectedRegion);
+  const fetchCafes = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.get("http://localhost:5000/api/cafes");
+      const data = Array.isArray(response.data) ? response.data : [];
+
+      setCafes(data);
+    } catch (error) {
+      console.error("Error fetching cafes:", error);
+      setCafes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredCafes = useMemo(() => {
+    return cafes.filter((item) => {
+      const matchesRegion =
+        selectedRegion === "All Regions" || item.city === selectedRegion;
+
+      const matchesCuisine =
+        selectedCuisine === "All" || item.cuisine === selectedCuisine;
+
+      return matchesRegion && matchesCuisine;
+    });
+  }, [cafes, selectedRegion, selectedCuisine]);
+
+  const openCafeBooking = (cafe) => {
+    navigate("/book-venue-cafe", {
+      state: {
+        venue: {
+          ...cafe,
+          id: cafe.id,
+          name: cafe.name,
+          category: "Cafe",
+          type: "cafe",
+          description: cafe.cuisine || "Cafe",
+          city: cafe.city,
+          area: cafe.area,
+          address: cafe.address || `${cafe.area}, ${cafe.city}`,
+          image: cafe.image || "/images/beirut/default-restaurant.jpg",
+          phone: cafe.phone || "+961 70 000 000",
+          instagram: cafe.instagram || "@cafe",
+          whatsapp: cafe.whatsapp || "+96170000000",
+          hours: cafe.hours || "8:30 PM - 1:00 AM",
+          google_maps_link: cafe.google_maps_link || "",
+          has_smoking: cafe.has_smoking,
+        },
+      },
+    });
+  };
 
   return (
-    <div className="cafes-page">
-      <div className="cafes-container">
+    <div className="restaurants-page">
+      <div className="restaurants-container">
         <button
           type="button"
-          className="cafes-back-btn"
-          onClick={() => navigate(isGuest ? "/guest" : "/user")}
+          className="restaurants-back-btn"
+          onClick={() => navigate(-1)}
         >
           <ArrowLeft size={24} />
           <span>Back</span>
         </button>
 
-        <h1 className="cafes-title">Cafés</h1>
+        <h1 className="restaurants-title">Cafes</h1>
 
         <div className="filter-row">
           <div className="location-icon-wrap">
@@ -247,65 +111,82 @@ export default function Cafes() {
               <option>South Lebanon</option>
               <option>North Lebanon</option>
             </select>
+
             <ChevronDown size={20} className="select-arrow" />
           </div>
         </div>
 
-        <p className="found-count">{filteredCafes.length} venues found</p>
+        <div className="cuisine-scroll">
+          {cuisineOptions.map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              className={`cuisine-card ${
+                selectedCuisine === item.name ? "active-cuisine" : ""
+              }`}
+              onClick={() => setSelectedCuisine(item.name)}
+            >
+              <div className="cuisine-icon-circle">{item.icon}</div>
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </div>
 
-        <div className="cafes-list">
+        <p className="found-count">
+          {loading ? "Loading cafes..." : `${filteredCafes.length} cafes found`}
+        </p>
+
+        <div className="restaurants-list">
+          {!loading && filteredCafes.length === 0 && (
+            <div className="no-results-box">No cafes found.</div>
+          )}
+
           {filteredCafes.map((cafe) => (
-            <div key={cafe.id} className="cafe-card">
-              <div className="cafe-image-box">
+            <div
+              key={cafe.id}
+              className="restaurant-card"
+              onClick={() => openCafeBooking(cafe)}
+            >
+              <div className="restaurant-image-box">
                 <img
-                  src={cafe.image}
+                  src={cafe.image || "/images/beirut/default-restaurant.jpg"}
                   alt={cafe.name}
                   onError={(e) => {
-                    e.target.src = "/images/cafes/default-cafe.jpg";
+                    e.target.src = "/images/beirut/default-restaurant.jpg";
                   }}
                 />
               </div>
 
-              <div className="cafe-info">
+              <div className="restaurant-info">
                 <h3>{cafe.name}</h3>
-                <p>{cafe.specialty}</p>
+
+                <p>{cafe.cuisine || "Cafe"}</p>
+
                 <span>
                   {cafe.city} - {cafe.area}
                 </span>
 
-                <div className="cafe-actions">
-                  {isGuest ? (
-                    <p className="guest-msg">Login to reserve</p>
-                  ) : (
-                   <button
-  className="book-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    navigate("/book-venue", {
-      state: {
-        venue: {
-          ...cafe,
-          category: "Cafe",
-          description: cafe.specialty,
-          address: `${cafe.area}, ${cafe.city}`,
-          phone: "+961 70 111 111",
-          instagram: "@cafe",
-          whatsapp: "+96170111111",
-          hours: "8:00 AM - 11:00 PM",
-        },
-      },
-    });
-  }}
->
-  Book Now
-</button>
-                  )}
-                </div>
+                <p>
+                  {Number(cafe.has_smoking) === 1 || cafe.has_smoking === true
+                    ? "Smoking Area Available"
+                    : "Non-Smoking Only"}
+                </p>
+
+                <button
+                  type="button"
+                  className="book-now-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    openCafeBooking(cafe);
+                  }}
+                >
+                  Book Now
+                </button>
               </div>
 
-              <div className="cafe-rating">
+              <div className="restaurant-rating">
                 <Star size={20} fill="#a1773f" color="#a1773f" />
-                <span>{cafe.rating}</span>
+                <span>{cafe.rating || 4.5}</span>
               </div>
             </div>
           ))}

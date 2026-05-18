@@ -131,3 +131,13 @@
     font-size: 16px;
   }
 }
+.book-now-btn {
+  background: #6f4e37;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+}

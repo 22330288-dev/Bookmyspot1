@@ -15,6 +15,31 @@ import {
 } from "lucide-react";
 import "./AdminRestaurants.css";
 
+const DEFAULT_IMAGE = "/images/beirut/default-restaurant.jpg";
+
+function normalizeImageUrl(value) {
+  const raw = String(value || "").trim();
+
+  if (!raw) return "";
+
+  try {
+    const url = new URL(raw);
+    const googleImageUrl = url.searchParams.get("imgurl");
+
+    if (googleImageUrl) {
+      return decodeURIComponent(googleImageUrl);
+    }
+
+    return raw;
+  } catch {
+    return raw;
+  }
+}
+
+function getDisplayImage(value) {
+  return normalizeImageUrl(value) || DEFAULT_IMAGE;
+}
+
 export default function AdminRestaurants() {
   const navigate = useNavigate();
 
@@ -29,7 +54,8 @@ export default function AdminRestaurants() {
 
   const [newCuisine, setNewCuisine] = useState("");
   const [newLocation, setNewLocation] = useState("");
-  const [locationParentRegion, setLocationParentRegion] = useState("North Lebanon");
+  const [locationParentRegion, setLocationParentRegion] =
+    useState("North Lebanon");
 
   const [editingRestaurant, setEditingRestaurant] = useState(null);
   const [restaurants, setRestaurants] = useState([]);
@@ -47,10 +73,45 @@ export default function AdminRestaurants() {
   ]);
 
   const [locationsByRegion, setLocationsByRegion] = useState({
-    Beirut: ["Gemmayze", "Downtown", "Hamra", "Ashrafieh", "Corniche"],
-    Bekaa: ["Zahle", "Anjar", "Qob Elias", "Haouch Al Oumara"],
-    "South Lebanon": ["Tyre", "Saida", "Tyre Port"],
-    "North Lebanon": ["Tripoli", "Mina/Tripoli"],
+    Beirut: [
+      "Gemmayze",
+      "Downtown",
+      "Hamra",
+      "Ashrafieh",
+      "Corniche",
+      "Zaitunay Bay",
+      "Minet El Hosn",
+      "Ain El Mreisseh",
+    ],
+    Bekaa: [
+      "Zahle",
+      "Anjar",
+      "Qob Elias",
+      "Haouch Al Oumara",
+      "Taanayel",
+      "Chtoura",
+      "Jalala",
+      "Saghbin",
+      "Bar Elias",
+    ],
+    "South Lebanon": [
+      "Tyre",
+      "Saida",
+      "Tyre Port",
+      "Sidon",
+      "Nabatieh",
+      "Jnob Region",
+    ],
+    "North Lebanon": [
+      "Tripoli",
+      "Mina/Tripoli",
+      "Old Souk/Tripoli",
+      "Mina Port",
+      "Zgharta",
+      "Bcharri",
+      "Qartawba",
+      "Batroun",
+    ],
   });
 
   const [restaurantForm, setRestaurantForm] = useState({
@@ -64,6 +125,8 @@ export default function AdminRestaurants() {
     instagram: "",
     whatsapp: "",
     hours: "",
+    has_smoking: true,
+    google_maps_link: "",
   });
 
   useEffect(() => {
@@ -97,7 +160,9 @@ export default function AdminRestaurants() {
   }, [restaurants, selectedRegion, selectedCuisine]);
 
   const currentLocations =
-    selectedRegion !== "All Regions" ? locationsByRegion[selectedRegion] || [] : [];
+    selectedRegion !== "All Regions"
+      ? locationsByRegion[selectedRegion] || []
+      : [];
 
   const toggleRestaurantSelection = (id) => {
     setSelectedRestaurants((prev) =>
@@ -159,6 +224,8 @@ export default function AdminRestaurants() {
       instagram: "",
       whatsapp: "",
       hours: "",
+      has_smoking: true,
+      google_maps_link: "",
     });
     setShowAddRestaurantModal(true);
   };
@@ -176,6 +243,8 @@ export default function AdminRestaurants() {
       instagram: restaurant.instagram || "",
       whatsapp: restaurant.whatsapp || "",
       hours: restaurant.hours || "",
+      has_smoking: !!restaurant.has_smoking,
+      google_maps_link: restaurant.google_maps_link || "",
     });
     setShowAddRestaurantModal(true);
   };
@@ -195,8 +264,9 @@ export default function AdminRestaurants() {
       const payload = {
         ...restaurantForm,
         rating: Number(restaurantForm.rating),
-        image:
-          restaurantForm.image || "/images/restaurants/default-restaurant.jpg",
+        image: normalizeImageUrl(restaurantForm.image) || DEFAULT_IMAGE,
+        has_smoking: restaurantForm.has_smoking,
+        google_maps_link: restaurantForm.google_maps_link || "",
       };
 
       if (editingRestaurant) {
@@ -406,7 +476,9 @@ export default function AdminRestaurants() {
         )}
 
         <p className="found-count">
-          {loading ? "Loading venues..." : `${filteredRestaurants.length} venues found`}
+          {loading
+            ? "Loading venues..."
+            : `${filteredRestaurants.length} venues found`}
         </p>
 
         <div className="restaurants-list">
@@ -418,7 +490,9 @@ export default function AdminRestaurants() {
             <div
               key={restaurant.id}
               className={`restaurant-card admin-restaurant-card ${
-                selectedRestaurants.includes(restaurant.id) ? "selected-card" : ""
+                selectedRestaurants.includes(restaurant.id)
+                  ? "selected-card"
+                  : ""
               }`}
               onClick={() => {
                 if (isSelectMode) {
@@ -440,10 +514,10 @@ export default function AdminRestaurants() {
 
               <div className="restaurant-image-box">
                 <img
-                  src={restaurant.image || "/images/restaurants/default-restaurant.jpg"}
+                  src={getDisplayImage(restaurant.image)}
                   alt={restaurant.name}
                   onError={(e) => {
-                    e.target.src = "/images/restaurants/default-restaurant.jpg";
+                    e.currentTarget.src = DEFAULT_IMAGE;
                   }}
                 />
               </div>
@@ -454,6 +528,17 @@ export default function AdminRestaurants() {
                 <span>
                   {restaurant.city} - {restaurant.area}
                 </span>
+                <p>
+                  {restaurant.has_smoking
+                    ? "Smoking Area Available"
+                    : "Non-Smoking Only"}
+                </p>
+
+                {restaurant.google_maps_link && (
+                  <p className="restaurant-map-link-preview">
+                    Map link added
+                  </p>
+                )}
 
                 <div className="admin-card-buttons">
                   <button
@@ -521,7 +606,10 @@ export default function AdminRestaurants() {
               <select
                 value={restaurantForm.cuisine}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, cuisine: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    cuisine: e.target.value,
+                  })
                 }
               >
                 {cuisineOptions
@@ -555,11 +643,13 @@ export default function AdminRestaurants() {
                   setRestaurantForm({ ...restaurantForm, area: e.target.value })
                 }
               >
-                {(locationsByRegion[restaurantForm.city] || []).map((areaItem) => (
-                  <option key={areaItem} value={areaItem}>
-                    {areaItem}
-                  </option>
-                ))}
+                {(locationsByRegion[restaurantForm.city] || []).map(
+                  (areaItem) => (
+                    <option key={areaItem} value={areaItem}>
+                      {areaItem}
+                    </option>
+                  )
+                )}
               </select>
 
               <input
@@ -568,25 +658,45 @@ export default function AdminRestaurants() {
                 placeholder="Rating"
                 value={restaurantForm.rating}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, rating: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    rating: e.target.value,
+                  })
                 }
               />
 
               <input
                 type="text"
-                placeholder="Image path or image URL"
+                placeholder="Paste direct image URL from Google / website"
                 value={restaurantForm.image}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, image: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    image: e.target.value,
+                  })
                 }
               />
+
+              <div className="image-url-preview-box">
+                <img
+                  src={getDisplayImage(restaurantForm.image)}
+                  alt="Restaurant preview"
+                  onError={(e) => {
+                    e.currentTarget.src = DEFAULT_IMAGE;
+                  }}
+                />
+                <span>Image preview</span>
+              </div>
 
               <input
                 type="text"
                 placeholder="Phone"
                 value={restaurantForm.phone}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, phone: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    phone: e.target.value,
+                  })
                 }
               />
 
@@ -595,7 +705,10 @@ export default function AdminRestaurants() {
                 placeholder="Instagram"
                 value={restaurantForm.instagram}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, instagram: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    instagram: e.target.value,
+                  })
                 }
               />
 
@@ -604,7 +717,10 @@ export default function AdminRestaurants() {
                 placeholder="WhatsApp"
                 value={restaurantForm.whatsapp}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, whatsapp: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    whatsapp: e.target.value,
+                  })
                 }
               />
 
@@ -613,9 +729,45 @@ export default function AdminRestaurants() {
                 placeholder="Hours"
                 value={restaurantForm.hours}
                 onChange={(e) =>
-                  setRestaurantForm({ ...restaurantForm, hours: e.target.value })
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    hours: e.target.value,
+                  })
                 }
               />
+
+              <input
+                type="text"
+                placeholder="Google Maps Link"
+                value={restaurantForm.google_maps_link}
+                onChange={(e) =>
+                  setRestaurantForm({
+                    ...restaurantForm,
+                    google_maps_link: e.target.value,
+                  })
+                }
+              />
+
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  marginTop: "10px",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={restaurantForm.has_smoking}
+                  onChange={(e) =>
+                    setRestaurantForm({
+                      ...restaurantForm,
+                      has_smoking: e.target.checked,
+                    })
+                  }
+                />
+                Has Smoking Area
+              </label>
 
               <button
                 type="button"
@@ -651,7 +803,11 @@ export default function AdminRestaurants() {
                 onChange={(e) => setNewCuisine(e.target.value)}
               />
 
-              <button type="button" className="save-modal-btn" onClick={addCuisine}>
+              <button
+                type="button"
+                className="save-modal-btn"
+                onClick={addCuisine}
+              >
                 Add Type
               </button>
             </div>
@@ -691,7 +847,11 @@ export default function AdminRestaurants() {
                 onChange={(e) => setNewLocation(e.target.value)}
               />
 
-              <button type="button" className="save-modal-btn" onClick={addLocation}>
+              <button
+                type="button"
+                className="save-modal-btn"
+                onClick={addLocation}
+              >
                 Add Location
               </button>
             </div>

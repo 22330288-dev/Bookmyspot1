@@ -1,7 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, MapPin, ChevronDown, Star } from "lucide-react";
-import "./EventsVenues.css";
+import axios from "axios";
+import "./Restaurants.css";
+
+const DEFAULT_IMAGE = "/images/events/default-event.jpg";
+
+function normalizeEventType(item) {
+  return item.type || item.event_type || item.style_type || "Event";
+}
 
 export default function EventsVenues() {
   const navigate = useNavigate();
@@ -9,120 +16,98 @@ export default function EventsVenues() {
   const isGuest = location.state?.isGuest || false;
 
   const [selectedRegion, setSelectedRegion] = useState("All Regions");
+  const [selectedType, setSelectedType] = useState("All");
+  const [eventVenues, setEventVenues] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const eventVenues = useMemo(() => {
-    return [
-      {
-        id: 1,
-        name: "Seaside Pavilion",
-        type: "Waterfront Luxury",
-        city: "Beirut",
-        area: "Downtown Beirut",
-        rating: 4.4,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 2,
-        name: "Beirut Seaside Arena",
-        type: "Large Waterfront Venue",
-        city: "Beirut",
-        area: "Zaitunay Bay",
-        rating: 4.0,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 3,
-        name: "BIEL Beirut",
-        type: "Large Convention Venue",
-        city: "Beirut",
-        area: "Downtown",
-        rating: 4.2,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 4,
-        name: "Saray Venue",
-        type: "Palace Style",
-        city: "Bekaa",
-        area: "Chtoura",
-        rating: 5.0,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 5,
-        name: "Jardin Blanc",
-        type: "Garden Venue",
-        city: "Bekaa",
-        area: "Zahle",
-        rating: 4.4,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 6,
-        name: "Le Venue Saida",
-        type: "Modern Event Hall",
-        city: "South Lebanon",
-        area: "Sidon",
-        rating: 4.8,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 7,
-        name: "Zenobia Venue",
-        type: "Luxury Event Hall",
-        city: "South Lebanon",
-        area: "Sidon",
-        rating: 4.3,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 8,
-        name: "La Salle Venue",
-        type: "Exhibition & Events",
-        city: "South Lebanon",
-        area: "Rmeileh",
-        rating: 4.0,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 9,
-        name: "Platane Wedding Venues",
-        type: "Luxury Garden + Nature",
-        city: "North Lebanon",
-        area: "Rachiine",
-        rating: 5.0,
-        image: "/images/events/default-event.jpg",
-      },
-      {
-        id: 10,
-        name: "Étoile De Mer",
-        type: "Rooftop Sea-View",
-        city: "North Lebanon",
-        area: "Tripoli",
-        rating: 4.0,
-        image: "/images/events/default-event.jpg",
-      },
-    ];
+  const typeOptions = [
+    { name: "All", icon: "🎉" },
+    { name: "Conference", icon: "🧑‍💼" },
+    { name: "Birthday", icon: "🎂" },
+    { name: "Corporate", icon: "🏢" },
+    { name: "Graduation", icon: "🎓" },
+    { name: "Outdoor", icon: "🌤️" },
+    { name: "Indoor", icon: "🏠" },
+    { name: "Concert", icon: "🎤" },
+    { name: "Exhibition", icon: "🖼️" },
+  ];
+
+  useEffect(() => {
+    fetchEventVenues();
   }, []);
 
-  const filteredEvents =
-    selectedRegion === "All Regions"
-      ? eventVenues
-      : eventVenues.filter((item) => item.city === selectedRegion);
+  const fetchEventVenues = async () => {
+    try {
+      setLoading(true);
+
+      const response = await axios.get(
+        "http://localhost:5000/api/event-venues"
+      );
+
+      setEventVenues(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error("Error fetching event venues:", error);
+      setEventVenues([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredEventVenues = useMemo(() => {
+    return eventVenues.filter((item) => {
+      const itemType = normalizeEventType(item);
+
+      const matchesRegion =
+        selectedRegion === "All Regions" || item.city === selectedRegion;
+
+      const matchesType =
+        selectedType === "All" || itemType === selectedType;
+
+      return matchesRegion && matchesType;
+    });
+  }, [eventVenues, selectedRegion, selectedType]);
+
+  const openEventBooking = (eventVenue) => {
+    const eventType = normalizeEventType(eventVenue);
+
+    navigate("/book-event-venue", {
+      state: {
+        venue: {
+          ...eventVenue,
+          category: "Event",
+          type: eventType,
+          event_type: eventType,
+          description: eventType,
+          address:
+            eventVenue.address ||
+            `${eventVenue.area || ""}, ${eventVenue.city || ""}`,
+          phone: eventVenue.phone || "+961 70 333 333",
+          instagram: eventVenue.instagram || "@eventvenue",
+          whatsapp: eventVenue.whatsapp || "+96170333333",
+          hours: eventVenue.hours || "Open all day",
+          google_maps_link: eventVenue.google_maps_link || "",
+          image:
+            typeof eventVenue.image === "string" && eventVenue.image.trim()
+              ? eventVenue.image.trim()
+              : DEFAULT_IMAGE,
+        },
+      },
+    });
+  };
 
   return (
-    <div className="events-page">
-      <div className="events-container">
+    <div className="restaurants-page">
+      <div className="restaurants-container">
         <button
           type="button"
-          className="events-back-btn"
+          className="restaurants-back-btn"
           onClick={() => navigate(isGuest ? "/guest" : "/user")}
         >
           <ArrowLeft size={24} />
           <span>Back</span>
         </button>
 
-        <h1 className="events-title">Events Venues</h1>
+        <h1 className="restaurants-title">Events Venues</h1>
 
         <div className="filter-row">
           <div className="location-icon-wrap">
@@ -141,68 +126,94 @@ export default function EventsVenues() {
               <option>South Lebanon</option>
               <option>North Lebanon</option>
             </select>
+
             <ChevronDown size={20} className="select-arrow" />
           </div>
         </div>
 
-        <p className="found-count">{filteredEvents.length} venues found</p>
+        <div className="cuisine-scroll">
+          {typeOptions.map((item) => (
+            <button
+              key={item.name}
+              type="button"
+              className={`cuisine-card ${
+                selectedType === item.name ? "active-cuisine" : ""
+              }`}
+              onClick={() => setSelectedType(item.name)}
+            >
+              <div className="cuisine-icon-circle">{item.icon}</div>
+              <span>{item.name}</span>
+            </button>
+          ))}
+        </div>
 
-        <div className="events-list">
-          {filteredEvents.map((venue) => (
-            <div key={venue.id} className="event-card">
-              <div className="event-image-box">
-                <img
-                  src={venue.image}
-                  alt={venue.name}
-                  onError={(e) => {
-                    e.target.src = "/images/events/default-event.jpg";
-                  }}
-                />
-              </div>
+        <p className="found-count">
+          {loading
+            ? "Loading event venues..."
+            : `${filteredEventVenues.length} venues found`}
+        </p>
 
-              <div className="event-info">
-                <h3>{venue.name}</h3>
-                <p>{venue.type}</p>
-                <span>
-                  {venue.city} - {venue.area}
-                </span>
+        <div className="restaurants-list">
+          {!loading && filteredEventVenues.length === 0 && (
+            <div className="no-results-box">
+              No event venues found for this filter.
+            </div>
+          )}
 
-                <div className="event-actions">
-                  {isGuest ? (
-                    <p className="guest-msg">Login to reserve</p>
-                  ) : (
-                    <button
-  className="book-btn"
-  onClick={(e) => {
-    e.stopPropagation();
-    navigate("/book-venue", {
-      state: {
-        venue: {
-          ...venue,
-          category: "Event Venue",
-          description: venue.type,
-          address: `${venue.area}, ${venue.city}`,
-          phone: "+961 70 333 333",
-          instagram: "@eventvenue",
-          whatsapp: "+96170333333",
-          hours: "10:00 AM - 12:00 AM",
-        },
-      },
-    });
-  }}
->
-  Book Now
-</button>
-                  )}
+          {filteredEventVenues.map((eventVenue) => {
+            const eventType = normalizeEventType(eventVenue);
+
+            return (
+              <div key={eventVenue.id} className="restaurant-card">
+                <div className="restaurant-image-box">
+                  <img
+                    src={
+                      typeof eventVenue.image === "string" &&
+                      eventVenue.image.trim()
+                        ? eventVenue.image.trim()
+                        : DEFAULT_IMAGE
+                    }
+                    alt={eventVenue.name}
+                    onError={(e) => {
+                      e.currentTarget.src = DEFAULT_IMAGE;
+                    }}
+                  />
+                </div>
+
+                <div className="restaurant-info">
+                  <h3>{eventVenue.name}</h3>
+
+                  <p>{eventType}</p>
+
+                  <span>
+                    {eventVenue.city} - {eventVenue.area}
+                  </span>
+
+                  <div className="restaurant-actions">
+                    {isGuest ? (
+                      <p className="guest-msg">Login to reserve</p>
+                    ) : (
+                      <button
+                        type="button"
+                        className="book-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openEventBooking(eventVenue);
+                        }}
+                      >
+                        Book Now
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="restaurant-rating">
+                  <Star size={20} fill="#a1773f" color="#a1773f" />
+                  <span>{eventVenue.rating || 4.5}</span>
                 </div>
               </div>
-
-              <div className="event-rating">
-                <Star size={20} fill="#a1773f" color="#a1773f" />
-                <span>{venue.rating}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>

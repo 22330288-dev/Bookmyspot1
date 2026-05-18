@@ -181,3 +181,45 @@
     text-align: left;
   }
 }
+.success-icon-wrap {
+  color: #2e8b57;
+}
+
+.pending-icon-wrap {
+  color: #d08b2d;
+}
+
+.paid-status {
+  color: #2e8b57;
+}
+
+.pending-status {
+  color: #d08b2d;
+}
+
+.success-note {
+  background: #eef8f1;
+  border: 1px solid #cfe7d5;
+}
+
+.pending-note {
+  background: #fff8eb;
+  border: 1px solid #efd9a7;
+}
+
+.manual-payment-box {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 14px;
+  background: #fff8eb;
+  border: 1px solid #efd9a7;
+  color: #6b4f1d;
+}
+
+.manual-payment-box h3 {
+  margin: 0 0 10px;
+}
+
+.manual-payment-box p {
+  margin: 6px 0;
+}

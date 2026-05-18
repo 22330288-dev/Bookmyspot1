@@ -23,6 +23,8 @@ router.get("/", (req, res) => {
         restaurant.mapLayout = [];
       }
 
+      restaurant.has_smoking = Number(restaurant.has_smoking) === 1;
+
       return restaurant;
     });
 
@@ -58,6 +60,8 @@ router.get("/:id", (req, res) => {
       restaurant.mapLayout = [];
     }
 
+    restaurant.has_smoking = Number(restaurant.has_smoking) === 1;
+
     return res.status(200).json(restaurant);
   });
 });
@@ -75,6 +79,8 @@ router.post("/", (req, res) => {
     instagram,
     whatsapp,
     hours,
+    has_smoking,
+    google_maps_link,
   } = req.body;
 
   if (!name || !cuisine || !city || !area) {
@@ -83,8 +89,22 @@ router.post("/", (req, res) => {
 
   const sql = `
     INSERT INTO restaurants
-    (name, cuisine, city, area, rating, image, phone, instagram, whatsapp, hours, mapLayout)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (
+      name,
+      cuisine,
+      city,
+      area,
+      rating,
+      image,
+      phone,
+      instagram,
+      whatsapp,
+      hours,
+      has_smoking,
+      google_maps_link,
+      mapLayout
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
   db.query(
@@ -100,6 +120,8 @@ router.post("/", (req, res) => {
       instagram || "",
       whatsapp || "",
       hours || "",
+      has_smoking ? 1 : 0,
+      google_maps_link || "",
       JSON.stringify([]),
     ],
     (err, result) => {
@@ -108,9 +130,22 @@ router.post("/", (req, res) => {
         return res.status(500).json({ message: "Insert failed" });
       }
 
-      return res.status(201).json({
-        message: "Restaurant added successfully",
-        id: result.insertId,
+      const restaurantId = result.insertId;
+
+      const sectionSql = `
+        INSERT INTO restaurant_sections (venue_id, section_name)
+        VALUES (?, 'Indoor'), (?, 'Outdoor')
+      `;
+
+      db.query(sectionSql, [restaurantId, restaurantId], (secErr) => {
+        if (secErr) {
+          console.error("ADD sections error:", secErr);
+        }
+
+        return res.status(201).json({
+          message: "Restaurant added successfully",
+          id: restaurantId,
+        });
       });
     }
   );
@@ -131,11 +166,25 @@ router.put("/:id", (req, res) => {
     instagram,
     whatsapp,
     hours,
+    has_smoking,
+    google_maps_link,
   } = req.body;
 
   const sql = `
     UPDATE restaurants
-    SET name = ?, cuisine = ?, city = ?, area = ?, rating = ?, image = ?, phone = ?, instagram = ?, whatsapp = ?, hours = ?
+    SET
+      name = ?,
+      cuisine = ?,
+      city = ?,
+      area = ?,
+      rating = ?,
+      image = ?,
+      phone = ?,
+      instagram = ?,
+      whatsapp = ?,
+      hours = ?,
+      has_smoking = ?,
+      google_maps_link = ?
     WHERE id = ?
   `;
 
@@ -152,6 +201,8 @@ router.put("/:id", (req, res) => {
       instagram,
       whatsapp,
       hours,
+      has_smoking ? 1 : 0,
+      google_maps_link || "",
       id,
     ],
     (err, result) => {

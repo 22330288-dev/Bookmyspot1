@@ -30,20 +30,23 @@ export default function Restaurants() {
   }, []);
 
   const fetchRestaurants = async () => {
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      const response = await axios.get("http://localhost:5000/api/restaurants");
+    const response = await axios.get("http://localhost:5000/api/restaurants");
 
-      setRestaurants(Array.isArray(response.data) ? response.data : []);
-    } catch (error) {
-      console.error("Error fetching restaurants:", error);
-      setRestaurants([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const data = Array.isArray(response.data) ? response.data : [];
 
+    console.log("ALL RESTAURANTS:", data); // 👈 حطيها هون
+
+    setRestaurants(data);
+  } catch (error) {
+    console.error("Error fetching restaurants:", error);
+    setRestaurants([]);
+  } finally {
+    setLoading(false);
+  }
+};
   const normalizeCuisine = (cuisine) => {
     if (!cuisine) return "";
 
@@ -143,17 +146,21 @@ export default function Restaurants() {
           )}
 
           {filteredRestaurants.map((restaurant) => (
+            
             <div key={restaurant.id} className="restaurant-card">
               <div className="restaurant-image-box">
                 <img
-                  src={
-                    restaurant.image || "/images/restaurants/default-restaurant.jpg"
-                  }
-                  alt={restaurant.name}
-                  onError={(e) => {
-                    e.target.src = "/images/restaurants/default-restaurant.jpg";
-                  }}
-                />
+  src={
+    typeof restaurant.image === "string" && restaurant.image.trim()
+      ? restaurant.image.trim()
+      : "/images/beirut/default-restaurant.jpg"
+  }
+  alt={restaurant.name}
+  onError={(e) => {
+    console.log("FAILED IMAGE PATH:", restaurant.image);
+    e.currentTarget.src = "/images/beirut/default-restaurant.jpg";
+  }}
+/>
               </div>
 
               <div className="restaurant-info">

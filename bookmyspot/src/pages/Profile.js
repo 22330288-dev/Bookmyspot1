@@ -7,6 +7,7 @@ import {
   Bell,
   Star,
   KeyRound,
+  CalendarCheck,
   Users,
   Gift,
   CreditCard,
@@ -29,6 +30,7 @@ export default function Profile() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
     }
@@ -49,6 +51,12 @@ export default function Profile() {
           title: "Edit Profile",
           subtitle: "Update your personal information",
           action: () => navigate("/edit-profile"),
+        },
+        {
+          icon: <CalendarCheck size={22} />,
+          title: "My Bookings",
+          subtitle: "View your table reservations",
+          action: () => navigate("/my-bookings"),
         },
         {
           icon: <Bell size={22} />,
@@ -83,7 +91,7 @@ export default function Profile() {
           icon: <Gift size={22} />,
           title: "Loyalty & Rewards",
           subtitle: "0 points available",
-        action: () => navigate("/loyalty-rewards"),
+          action: () => navigate("/loyalty-rewards"),
         },
         {
           icon: <CreditCard size={22} />,
@@ -106,7 +114,7 @@ export default function Profile() {
           icon: <MessageCircle size={22} />,
           title: "My Reviews",
           subtitle: "Reviews you've written",
-         action: () => navigate("/my-reviews"),
+          action: () => navigate("/my-reviews"),
         },
         {
           icon: <Clock3 size={22} />,
@@ -196,11 +204,7 @@ export default function Profile() {
           </div>
         ))}
 
-        <button
-          type="button"
-          className="signout-btn"
-          onClick={handleSignOut}
-        >
+        <button type="button" className="signout-btn" onClick={handleSignOut}>
           <LogOut size={20} />
           <span>Sign Out</span>
         </button>

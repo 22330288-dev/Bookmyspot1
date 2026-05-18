@@ -24,6 +24,18 @@
   border-bottom-right-radius: 22px;
 }
 
+.logo-icon {
+  width: 70px;
+  height: 70px;
+  background: #e8e4df;
+  border-radius: 20px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c523d;
+}
+
 .brand-title {
   font-size: 52px;
   font-weight: 700;
@@ -33,7 +45,7 @@
 }
 
 .brand-subtitle {
- font-size: 20px;
+  font-size: 20px;
   color: #8f735b;
   margin-top: 24px;
   line-height: 1.5;
@@ -61,7 +73,7 @@
 }
 
 .category-box {
-   width: 60px;
+  width: 60px;
   height: 60px;
   border-radius: 18px;
   background: #ece7e2;
@@ -128,13 +140,17 @@
   white-space: nowrap;
 }
 
+/* centered Google + Guest buttons */
 .social-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 18px;
+  flex-wrap: wrap;
 }
 
 .social-btn {
+  width: 180px;
   height: 86px;
   border: 1.5px solid #d7d0c8;
   border-radius: 10px;
@@ -148,12 +164,57 @@
   font-size: 18px;
   font-family: Georgia, "Times New Roman", serif;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.social-btn:hover,
+.social-btn:focus {
+  transform: translateY(-2px);
 }
 
 .google-icon {
   font-size: 26px;
   font-weight: 700;
   line-height: 1;
+}
+
+/* Google button */
+.google-btn {
+  background: #ffffff;
+  border: 1.5px solid #d7d0c8;
+  color: #1d1714;
+  transition: 0.2s ease;
+}
+
+.google-btn:hover,
+.google-btn:focus {
+  background: #f8f8f8;
+  border-color: #c9b8a7;
+}
+
+.google-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Guest button */
+.guest-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-btn,
+.signup-btn,
+.back-btn {
+  transition: 0.2s ease;
 }
 
 @media (max-width: 768px) {
@@ -186,22 +247,12 @@
   }
 
   .social-buttons {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
   }
-}
-.logo-icon {
-  width: 70px;
-  height: 70px;
-  background: #e8e4df;
-  border-radius: 20px;
-  margin: 0 auto 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6c523d;
-}
-.social-btn,
-.signup-btn,
-.back-btn {
-  transition: 0.2s ease;
+
+  .social-btn {
+    width: 100%;
+    max-width: 280px;
+  }
 }
