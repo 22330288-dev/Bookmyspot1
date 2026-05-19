@@ -119,7 +119,7 @@ export default function BookEventVenue() {
     async function fetchSections() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/event-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/event-options/${venue.id}/sections`
         );
 
         const data = await response.json();
@@ -187,7 +187,7 @@ export default function BookEventVenue() {
     async function fetchMapLayout() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/event-options/${venue.id}/layout/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/event-options/${venue.id}/layout/${sectionId}`
         );
 
         const data = await response.json();
@@ -213,7 +213,7 @@ export default function BookEventVenue() {
     async function fetchReservedItems() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/event-bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
+          `${process.env.REACT_APP_API_URL}/api/event-bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
             duration
           )}`
         );
@@ -429,7 +429,7 @@ export default function BookEventVenue() {
   if (bookingMode === "edit" && bookingToShow?.id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/event-bookings/${bookingToShow.id}`,
+        `${process.env.REACT_APP_API_URL}/api/event-bookings/${bookingToShow.id}`,
         {
           method: "PUT",
           headers: {
