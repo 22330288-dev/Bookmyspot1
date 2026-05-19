@@ -9,7 +9,7 @@ export default function AdminLocations() {
 
   async function fetchLocations() {
     try {
-      const response = await fetch("http://localhost:5000/api/locations");
+      const response = await fetch("${process.env.REACT_APP_API_URL}/api/locations");
       const data = await response.json();
 
       if (response.ok) {
@@ -43,8 +43,8 @@ export default function AdminLocations() {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/api/locations/${editingId}`
-        : "http://localhost:5000/api/locations";
+        ? `${process.env.REACT_APP_API_URL}/api/locations/${editingId}`
+        : "${process.env.REACT_APP_API_URL}/api/locations";
 
       const method = editingId ? "PUT" : "POST";
 
@@ -86,7 +86,7 @@ export default function AdminLocations() {
     if (!confirmed) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/locations/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/locations/${id}`, {
         method: "DELETE",
       });
 
