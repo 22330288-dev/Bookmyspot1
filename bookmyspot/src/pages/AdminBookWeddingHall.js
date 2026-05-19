@@ -43,7 +43,7 @@ export default function AdminBookWeddingHall() {
         setLoadingVenue(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/wedding-halls/${venueFromState.id}`
+          `${process.env.REACT_APP_API_URL}/api/wedding-halls/${venueFromState.id}`
         );
 
         setVenue({
