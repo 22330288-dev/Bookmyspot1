@@ -15,7 +15,7 @@ export default function AdminSections() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin-sections/${id}`
+        `${process.env.REACT_APP_API_URL}/api/admin-sections/${id}`
       );
       const data = await response.json();
 
@@ -54,8 +54,8 @@ export default function AdminSections() {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/api/admin-sections/${editingId}`
-        : "http://localhost:5000/api/admin-sections";
+        ? `${process.env.REACT_APP_API_URL}/api/admin-sections/${editingId}`
+        : "${process.env.REACT_APP_API_URL}/api/admin-sections";
 
       const method = editingId ? "PUT" : "POST";
 
@@ -98,7 +98,7 @@ export default function AdminSections() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin-sections/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/admin-sections/${id}`,
         {
           method: "DELETE",
         }
