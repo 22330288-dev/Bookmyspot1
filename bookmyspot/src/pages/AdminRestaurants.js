@@ -136,7 +136,7 @@ export default function AdminRestaurants() {
   const fetchRestaurants = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/restaurants");
+      const response = await axios.get("${process.env.REACT_APP_API_URL}/api/restaurants");
       const data = Array.isArray(response.data) ? response.data : [];
       setRestaurants(data);
     } catch (error) {
@@ -175,7 +175,7 @@ export default function AdminRestaurants() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/restaurants/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/restaurants/${id}`);
       setSelectedRestaurants((prev) => prev.filter((item) => item !== id));
       fetchRestaurants();
     } catch (error) {
@@ -196,7 +196,7 @@ export default function AdminRestaurants() {
     try {
       await Promise.all(
         selectedRestaurants.map((id) =>
-          axios.delete(`http://localhost:5000/api/restaurants/${id}`)
+          axios.delete(`${process.env.REACT_APP_API_URL}/api/restaurants/${id}`)
         )
       );
 
@@ -271,11 +271,11 @@ export default function AdminRestaurants() {
 
       if (editingRestaurant) {
         await axios.put(
-          `http://localhost:5000/api/restaurants/${editingRestaurant.id}`,
+          `${process.env.REACT_APP_API_URL}/api/restaurants/${editingRestaurant.id}`,
           payload
         );
       } else {
-        await axios.post("http://localhost:5000/api/restaurants", payload);
+        await axios.post("${process.env.REACT_APP_API_URL}/api/restaurants", payload);
       }
 
       setShowAddRestaurantModal(false);
