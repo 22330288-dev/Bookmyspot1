@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import "./BookVenue.css";
 
-const MAP_API = "http://localhost:5000/api/cafe-layouts";
+const MAP_API = `${process.env.REACT_APP_API_URL}/api/cafe-layouts`;
 
 export default function AdminBookCafe() {
   const navigate = useNavigate();
