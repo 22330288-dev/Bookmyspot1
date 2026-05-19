@@ -27,7 +27,7 @@ export default function Verify() {
     try {
       setLoadingMethod(method);
 
-      const response = await fetch("http://localhost:5000/api/auth/send-code", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/send-code`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
