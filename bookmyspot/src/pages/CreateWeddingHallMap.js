@@ -31,7 +31,7 @@ export default function CreateWeddingHallMap() {
 
   const { venue, sectionId, sectionName } = location.state || {};
 
-  const API_URL = `http://localhost:5000/api/wedding-options/${venue?.id}`;
+  const API_URL = `${process.env.REACT_APP_API_URL}/api/wedding-options/${venue?.id}`;
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
