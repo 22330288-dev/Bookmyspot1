@@ -124,7 +124,7 @@ export default function BookWeddingHall() {
     async function fetchSections() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/wedding-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/wedding-options/${venue.id}/sections`
         );
 
         const data = await response.json();
@@ -191,7 +191,7 @@ export default function BookWeddingHall() {
     async function fetchMapLayout() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/wedding-options/${venue.id}/layout/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/wedding-options/${venue.id}/layout/${sectionId}`
         );
 
         const data = await response.json();
@@ -217,7 +217,7 @@ export default function BookWeddingHall() {
     async function fetchReservedItems() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/wedding-bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
+          `${process.env.REACT_APP_API_URL}/api/wedding-bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
             duration
           )}`
         );
@@ -425,7 +425,7 @@ export default function BookWeddingHall() {
   if (bookingMode === "edit" && bookingToShow?.id) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/wedding-bookings/${bookingToShow.id}`,
+        `${process.env.REACT_APP_API_URL}/api/wedding-bookings/${bookingToShow.id}`,
         {
           method: "PUT",
           headers: {
