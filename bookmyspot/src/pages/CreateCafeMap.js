@@ -24,7 +24,7 @@ import {
 import "./CreateSeats.css";
 import "./CreateRestaurantMap.css";
 
-const API_BASE = "http://localhost:5000/api/cafe-layouts";
+const API_BASE = "${process.env.REACT_APP_API_URL}/api/cafe-layouts";
 
 export default function CreateCafeMap() {
   const navigate = useNavigate();
