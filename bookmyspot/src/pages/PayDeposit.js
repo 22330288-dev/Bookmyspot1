@@ -11,14 +11,14 @@ function getPaymentStatus(paymentMethod) {
 
 function getEndpoint(category) {
   if (category === "Wedding Hall") {
-    return "http://localhost:5000/api/wedding-bookings";
+    return `${process.env.REACT_APP_API_URL}/api/wedding-bookings`;
   }
 
   if (category === "Event") {
-    return "http://localhost:5000/api/event-bookings";
+    return `${process.env.REACT_APP_API_URL}/api/event-bookings`;
   }
 
-  return "http://localhost:5000/api/bookings";
+  return `${process.env.REACT_APP_API_URL}/api/bookings`;
 }
 
 function buildBookingPayload(booking, paymentMethod) {
