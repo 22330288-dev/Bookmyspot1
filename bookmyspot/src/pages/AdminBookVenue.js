@@ -97,7 +97,7 @@ export default function AdminBookVenue() {
         setLoadingVenue(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/restaurants/${venueFromState.id}`
+          `${process.env.REACT_APP_API_URL}/api/restaurants/${venueFromState.id}`
         );
 
         setVenue(response.data);
@@ -117,7 +117,7 @@ export default function AdminBookVenue() {
     const fetchSections = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/venue-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/venue-options/${venue.id}/sections`
         );
 
         const data = Array.isArray(response.data) ? response.data : [];
@@ -152,7 +152,7 @@ export default function AdminBookVenue() {
     const fetchAreas = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/venue-options/${venue.id}/admin-areas/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/venue-options/${venue.id}/admin-areas/${sectionId}`
         );
 
         const data = Array.isArray(response.data) ? response.data : [];
@@ -216,7 +216,7 @@ export default function AdminBookVenue() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/bookings/venue/${venue.id}`,
+        `${process.env.REACT_APP_API_URL}/api/bookings/venue/${venue.id}`,
         {
           params: {
             booking_date: previewDate,
@@ -361,7 +361,7 @@ export default function AdminBookVenue() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/bookings/search/${bookingSearch.trim()}`
+        `${process.env.REACT_APP_API_URL}/api/bookings/search/${bookingSearch.trim()}`
       );
 
       const booking = response.data;
@@ -418,7 +418,7 @@ export default function AdminBookVenue() {
     if (!foundBooking?.id) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/bookings/${foundBooking.id}`, {
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/bookings/${foundBooking.id}`, {
         booking_date: editDate,
         booking_time: editTime,
         duration: editDuration,
@@ -483,7 +483,7 @@ export default function AdminBookVenue() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/bookings/${foundBooking.id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/bookings/${foundBooking.id}`);
 
       alert("Booking deleted successfully.");
       setFoundBooking(null);
