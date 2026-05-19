@@ -175,7 +175,7 @@ export default function AdminCafes() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/cafes/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/cafes/${id}`);
       setSelectedCafes((prev) => prev.filter((item) => item !== id));
       fetchCafes();
     } catch (error) {
@@ -265,9 +265,9 @@ export default function AdminCafes() {
       };
 
       if (editingCafe) {
-        await axios.put(`http://localhost:5000/api/cafes/${editingCafe.id}`, payload);
+        await axios.put(`${process.env.REACT_APP_API_URL}/api/cafes/${editingCafe.id}`, payload);
       } else {
-        await axios.post("http://localhost:5000/api/cafes", payload);
+        await axios.post(`${process.env.REACT_APP_API_URL}/api/cafes`, payload);
       }
 
       setShowAddCafeModal(false);
