@@ -134,7 +134,7 @@ export default function AdminWeddingHalls() {
   const fetchWeddingHalls = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/wedding-halls");
+      const response = await axios.get("${process.env.REACT_APP_API_URL}/api/wedding-halls");
       const data = Array.isArray(response.data) ? response.data : [];
       setWeddingHalls(data);
     } catch (error) {
@@ -173,7 +173,7 @@ export default function AdminWeddingHalls() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/wedding-halls/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/wedding-halls/${id}`);
       setSelectedHalls((prev) => prev.filter((item) => item !== id));
       fetchWeddingHalls();
     } catch (error) {
@@ -194,7 +194,7 @@ export default function AdminWeddingHalls() {
     try {
       await Promise.all(
         selectedHalls.map((id) =>
-          axios.delete(`http://localhost:5000/api/wedding-halls/${id}`)
+          axios.delete(`${process.env.REACT_APP_API_URL}/api/wedding-halls/${id}`)
         )
       );
 
@@ -261,11 +261,11 @@ export default function AdminWeddingHalls() {
 
       if (editingHall) {
         await axios.put(
-          `http://localhost:5000/api/wedding-halls/${editingHall.id}`,
+          `${process.env.REACT_APP_API_URL}/api/wedding-halls/${editingHall.id}`,
           payload
         );
       } else {
-        await axios.post("http://localhost:5000/api/wedding-halls", payload);
+        await axios.post("${process.env.REACT_APP_API_URL}/api/wedding-halls", payload);
       }
 
       setShowAddHallModal(false);
