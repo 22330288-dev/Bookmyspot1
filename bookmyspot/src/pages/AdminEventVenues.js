@@ -138,7 +138,7 @@ export default function AdminEventVenues() {
       setLoading(true);
 
       const response = await axios.get(
-        "http://localhost:5000/api/event-venues"
+        "${process.env.REACT_APP_API_URL}/api/event-venues"
       );
 
       const data = Array.isArray(response.data) ? response.data : [];
@@ -181,7 +181,7 @@ export default function AdminEventVenues() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/event-venues/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/event-venues/${id}`);
       setSelectedEvents((prev) => prev.filter((item) => item !== id));
       fetchEventVenues();
     } catch (error) {
@@ -202,7 +202,7 @@ export default function AdminEventVenues() {
     try {
       await Promise.all(
         selectedEvents.map((id) =>
-          axios.delete(`http://localhost:5000/api/event-venues/${id}`)
+          axios.delete(`${process.env.REACT_APP_API_URL}/api/event-venues/${id}`)
         )
       );
 
