@@ -33,7 +33,7 @@ export default function Restaurants() {
   try {
     setLoading(true);
 
-    const response = await axios.get("http://localhost:5000/api/restaurants");
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/restaurants`);
 
     const data = Array.isArray(response.data) ? response.data : [];
 
