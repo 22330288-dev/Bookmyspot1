@@ -224,10 +224,10 @@ export default function MyBookings() {
       weddingBookings,
       eventBookings,
     ] = await Promise.all([
-      fetchJsonSafe(`http://localhost:5000/api/bookings/user/${userId}`),
-      fetchJsonSafe(`http://localhost:5000/api/cafe-bookings/user/${userId}`),
-      fetchJsonSafe(`http://localhost:5000/api/wedding-bookings/user/${userId}`),
-      fetchJsonSafe(`http://localhost:5000/api/event-bookings/user/${userId}`),
+      fetchJsonSafe(`${process.env.REACT_APP_API_URL}/api/bookings/user/${userId}`),
+      fetchJsonSafe(`${process.env.REACT_APP_API_URL}/api/cafe-bookings/user/${userId}`),
+      fetchJsonSafe(`${process.env.REACT_APP_API_URL}/api/wedding-bookings/user/${userId}`),
+      fetchJsonSafe(`${process.env.REACT_APP_API_URL}/api/event-bookings/user/${userId}`),
     ]);
 
     const allBookings = [
@@ -342,18 +342,18 @@ export default function MyBookings() {
 
   const getDeleteUrl = (booking) => {
     if (booking.source === "cafe") {
-      return `http://localhost:5000/api/cafe-bookings/${booking.id}`;
+      return `${process.env.REACT_APP_API_URL}/api/cafe-bookings/${booking.id}`;
     }
 
     if (booking.source === "wedding") {
-      return `http://localhost:5000/api/wedding-bookings/${booking.id}`;
+      return `${process.env.REACT_APP_API_URL}/api/wedding-bookings/${booking.id}`;
     }
 
     if (booking.source === "event") {
-      return `http://localhost:5000/api/event-bookings/${booking.id}`;
+      return `${process.env.REACT_APP_API_URL}/api/event-bookings/${booking.id}`;
     }
 
-    return `http://localhost:5000/api/bookings/${booking.id}`;
+    return `${process.env.REACT_APP_API_URL}/api/bookings/${booking.id}`;
   };
 
   const deleteBooking = async (booking) => {
