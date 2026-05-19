@@ -52,8 +52,8 @@ export default function AdminAreas() {
 
     try {
       const url = editingId
-        ? `http://localhost:5000/api/admin-areas/${editingId}`
-        : "http://localhost:5000/api/admin-areas";
+        ? `${process.env.REACT_APP_API_URL}/api/admin-areas/${editingId}`
+        : "${process.env.REACT_APP_API_URL}/api/admin-areas";
 
       const method = editingId ? "PUT" : "POST";
 
@@ -105,7 +105,7 @@ export default function AdminAreas() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin-areas/${id}`,
+        `${process.env.REACT_APP_API_URL}/api/admin-areas/${id}`,
         {
           method: "DELETE",
         }
