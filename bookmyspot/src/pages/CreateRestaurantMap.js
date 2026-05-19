@@ -24,7 +24,7 @@ import {
 import "./CreateSeats.css";
 import "./CreateRestaurantMap.css";
 
-const API_BASE = "http://localhost:5000/api/venue-map";
+const API_BASE = "${process.env.REACT_APP_API_URL}/api/venue-map";
 
 export default function CreateRestaurantMap() {
   const navigate = useNavigate();
