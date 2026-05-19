@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import "./BookVenue.css";
 
-const MAP_API = "http://localhost:5000/api/venue-map";
+const MAP_API = "${process.env.REACT_APP_API_URL}/api/venue-map";
 
 function getTodayString() {
   return new Date().toISOString().split("T")[0];
@@ -132,7 +132,7 @@ export default function BookVenue() {
     async function fetchSections() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/venue-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/venue-options/${venue.id}/sections`
         );
 
         const data = await response.json();
@@ -185,7 +185,7 @@ export default function BookVenue() {
     async function fetchAreas() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/venue-options/${venue.id}/areas/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/venue-options/${venue.id}/areas/${sectionId}`
         );
 
         const data = await response.json();
@@ -271,7 +271,7 @@ export default function BookVenue() {
     async function fetchReservedItems() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
+          `${process.env.REACT_APP_API_URL}/api/bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
             duration
           )}`
         );
@@ -618,7 +618,7 @@ export default function BookVenue() {
     if (bookingMode === "edit") {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/bookings/${editingBookingId}`,
+          `${process.env.REACT_APP_API_URL}/api/bookings/${editingBookingId}`,
           {
             method: "PUT",
             headers: {
