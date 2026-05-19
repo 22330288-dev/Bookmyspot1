@@ -31,7 +31,9 @@ export default function Cafes() {
     try {
       setLoading(true);
 
-      const response = await axios.get("http://localhost:5000/api/cafes");
+      const response = await axios.get(
+  `${process.env.REACT_APP_API_URL}/api/cafes`
+);
       const data = Array.isArray(response.data) ? response.data : [];
 
       setCafes(data);
