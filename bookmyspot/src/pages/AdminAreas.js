@@ -17,7 +17,7 @@ export default function AdminAreas() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin-areas/${venueId}/${sectionId}`
+        `${process.env.REACT_APP_API_URL}/api/admin-areas/${venueId}/${sectionId}`
       );
       const data = await response.json();
 
