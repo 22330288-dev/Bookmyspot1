@@ -43,7 +43,7 @@ export default function AdminBookEventVenue() {
         setLoadingVenue(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/event-venues/${venueFromState.id}`
+          `${process.env.REACT_APP_API_URL}/api/event-venues/${venueFromState.id}`
         );
 
         const eventType =
@@ -117,7 +117,7 @@ export default function AdminBookEventVenue() {
         setLoadingMap(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/event-options/${venue.id}/layout/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/event-options/${venue.id}/layout/${sectionId}`
         );
 
         const mapData = Array.isArray(response.data?.map)
