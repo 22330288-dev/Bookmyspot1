@@ -162,7 +162,7 @@ export default function BookVenueCafe() {
     async function fetchSections() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/cafe-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/cafe-options/${venue.id}/sections`
         );
 
         const data = await response.json();
@@ -215,7 +215,7 @@ export default function BookVenueCafe() {
     async function fetchAreas() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/cafe-options/${venue.id}/areas/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/cafe-options/${venue.id}/areas/${sectionId}`
         );
 
         const data = await response.json();
@@ -274,7 +274,7 @@ export default function BookVenueCafe() {
     async function fetchMapLayout() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/cafe-layouts?venue_id=${venue.id}&section_id=${sectionId}&area_id=${areaId}`
+          `${process.env.REACT_APP_API_URL}/api/cafe-layouts?venue_id=${venue.id}&section_id=${sectionId}&area_id=${areaId}`
         );
 
         const data = await response.json();
@@ -301,7 +301,7 @@ export default function BookVenueCafe() {
     async function fetchReservedItems() {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
+          `${process.env.REACT_APP_API_URL}/api/bookings/venue/${venue.id}?booking_date=${bookingDate}&booking_time=${preferredTime}&duration=${encodeURIComponent(
             duration
           )}`
         );
@@ -706,7 +706,7 @@ export default function BookVenueCafe() {
     if (bookingMode === "edit") {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/bookings/${editingBookingId}`,
+          `${process.env.REACT_APP_API_URL}/api/bookings/${editingBookingId}`,
           {
             method: "PUT",
             headers: {
