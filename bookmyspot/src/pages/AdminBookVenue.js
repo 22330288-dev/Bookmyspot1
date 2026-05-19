@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import "./BookVenue.css";
 
-const MAP_API = "http://localhost:5000/api/venue-map";
+const MAP_API = `${process.env.REACT_APP_API_URL}/api/venue-map`;
 
 function getTodayString() {
   return new Date().toISOString().split("T")[0];
