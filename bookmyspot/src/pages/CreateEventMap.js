@@ -31,7 +31,7 @@ export default function CreateEventMap() {
 
   const { venue, sectionId, sectionName } = location.state || {};
 
-  const API_URL = `http://localhost:5000/api/event-options/${venue?.id}`;
+  const API_URL = `${process.env.REACT_APP_API_URL}/api/event-options/${venue?.id}`;
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
