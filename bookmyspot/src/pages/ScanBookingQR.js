@@ -59,7 +59,7 @@ export default function ScanBookingQR() {
         If QR has only booking number: verify only and show booking details.
       */
       const response = qrToken
-        ? await fetch("http://localhost:5000/api/bookings/check-in", {
+        ? await fetch(`${process.env.REACT_APP_API_URL}/api/bookings/check-in`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -70,7 +70,7 @@ export default function ScanBookingQR() {
             }),
           })
         : await fetch(
-            `http://localhost:5000/api/bookings/verify-all/${bookingNumber}`
+            `${process.env.REACT_APP_API_URL}/api/bookings/verify-all/${bookingNumber}`
           );
 
       const data = await response.json();
