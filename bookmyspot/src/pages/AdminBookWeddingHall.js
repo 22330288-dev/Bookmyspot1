@@ -69,7 +69,7 @@ export default function AdminBookWeddingHall() {
     const fetchSections = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/wedding-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/wedding-options/${venue.id}/sections`
         );
 
         const data = Array.isArray(response.data) ? response.data : [];
@@ -108,7 +108,7 @@ export default function AdminBookWeddingHall() {
         setLoadingMap(true);
 
         const response = await axios.get(
-          `http://localhost:5000/api/wedding-options/${venue.id}/layout/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/wedding-options/${venue.id}/layout/${sectionId}`
         );
 
         const mapData = Array.isArray(response.data?.map)
