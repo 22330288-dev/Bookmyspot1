@@ -48,7 +48,7 @@ export default function AdminBookCafe() {
       try {
         setLoadingVenue(true);
         const response = await axios.get(
-          `http://localhost:5000/api/cafes/${venueFromState.id}`
+          `${process.env.REACT_APP_API_URL}/api/cafes/${venueFromState.id}`
         );
 
         setVenue({
@@ -72,7 +72,7 @@ export default function AdminBookCafe() {
     const fetchSections = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/cafe-options/${venue.id}/sections`
+          `${process.env.REACT_APP_API_URL}/api/cafe-options/${venue.id}/sections`
         );
 
         const data = Array.isArray(response.data) ? response.data : [];
@@ -107,7 +107,7 @@ export default function AdminBookCafe() {
     const fetchAreas = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/cafe-options/${venue.id}/admin-areas/${sectionId}`
+          `${process.env.REACT_APP_API_URL}/api/cafe-options/${venue.id}/admin-areas/${sectionId}`
         );
 
         const data = Array.isArray(response.data) ? response.data : [];
