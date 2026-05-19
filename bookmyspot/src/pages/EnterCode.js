@@ -57,8 +57,8 @@ export default function EnterCode() {
 
   try {
     const endpoint = isReset
-      ? "http://localhost:5000/api/auth/verify-reset-code"
-      : "http://localhost:5000/api/auth/verify-code";
+      ? "${process.env.REACT_APP_API_URL}/api/auth/verify-reset-code"
+      : "${process.env.REACT_APP_API_URL}/api/auth/verify-code";
 
     const response = await fetch(endpoint, {
       method: "POST",
